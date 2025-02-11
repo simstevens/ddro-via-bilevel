@@ -18,4 +18,4 @@ From the [main directory](./), run
 ```
 python3 -m src.shortest_path_cont_budg --instance_file file_name --approach approach_value
 ```
-to solve the specified shortest path instance with the specified approach.
+to solve the specified shortest path instance with a continuous uncertainty set and the specified approach. To solve instances of the other models, replace `shortest_path_cont_budg` with the corresponding file.
