@@ -24,6 +24,6 @@ to solve the specified shortest path instance with a continuous uncertainty set 
 ### Discrete Uncertainty Sets
 From the [main directory](./), run
 ```
-Platzhalter
+dist/bin/mibs -instance file_name.mps -feasCheckSolver CPLEX 
 ```
-to solve the specified shortest path instance with a discrete uncertainty set using the ```MibS``` solver. To solve instances of the knapsack models, replace `Platzhalter` with `Platzhalter`.
+to solve the specified shortest path or knapsack instance with a discrete uncertainty set using the `MibS` solver.
