@@ -41,6 +41,8 @@ if __name__ == "__main__":
     raise TypeError("The uncertainty set has to be either 'cont_knapsack', 'cont_budgeted' or 'discrete'!")
   if approach not in ["robust", "bilevel"]:
     raise TypeError("The approach has to be either 'robust' or 'bilevel'!")
+  if instane_id not in range(1,21):
+    raise TypeError("Only instance IDs between 1 and 20 are available.")
   
   # shortest path
   if problem_class == "shortest_path":
