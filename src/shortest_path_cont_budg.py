@@ -40,6 +40,8 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name
 
     # create a new model
     m = gp.Model("Shortest Path Bilevel")
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
 
     # define McCormick bigMs
     M_lam = dict(cost_dev)
@@ -134,6 +136,8 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
 
     # create a new model
     m = gp.Model("Shortest Path Robust")
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
 
     # define McCormick bigMs
     M_lam = dict(cost_dev)

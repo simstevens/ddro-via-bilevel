@@ -32,6 +32,8 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, f
 
     # create a new model
     m = gp.Model("Knapsack Bilevel")
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
 
     # create variables
     x = m.addVars(items, vtype = GRB.BINARY, name = "decision")
@@ -116,6 +118,8 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, fi
 
     # create a new model
     m = gp.Model("Knapsack Robust")
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
 
     # create variables
     x = m.addVars(items, vtype = GRB.BINARY, name = "decision")
