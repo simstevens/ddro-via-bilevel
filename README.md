@@ -32,7 +32,7 @@ The problem that is to be solved, e.g. 'shortest_path', 'knapsack' or 'portfolio
 The kind of uncertainty that is to be chosen, e.g. 'cont_budgeted', 'cont_knapsack' or 'discrete'.
 
 `--instance_size`
-The size of the instance. The following sizes are available for the following problem / uncertainty combinations:
+The size of the instance. The following sizes are available for the different problem / uncertainty combinations:
 
 |               | Shortest Path      | Knapsack                  | Portfolio           |
 |---------------|--------------------|---------------------------|---------------------|
