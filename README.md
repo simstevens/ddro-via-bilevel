@@ -10,6 +10,9 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 * argparse
 * random
 * networkx
+* subprocess
+* os
+* sys
 
 Moreover, the bilevel problems obtained for the discrete uncertainty sets are solved using `MibS 1.2`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/).
 
@@ -17,13 +20,21 @@ Moreover, the bilevel problems obtained for the discrete uncertainty sets are so
 ### Continuous Uncertainty Sets
 From the [main directory](./), run
 ```
-python3 -m src.shortest_path_cont_budg --instance_file file_name --approach approach_value
+python3 -m ddro-via-bilevel --problem_class problem --uncertainty uncertainty --instance_size instance_size --instance_id instance_id --approach reformulation_approach
 ```
-to solve the specified shortest path instance with a continuous uncertainty set and the specified approach. To solve instances of the other models, replace `shortest_path_cont_budg` with the corresponding file.
+to solve the specified instance with a continuous uncertainty set and the specified approach. To solve instances of the other models. 
+Necessary arguments:
+`--problem_class`
+The problem that is to be solved, e.g. 'shortest_path', 'knapsack' or 'portfolio'.
+`--uncertainty`
+The kind of uncertainty that is to be chosen, e.g. 'cont_budgeted', 'cont_knapsack' or 'discrete'.
+`--instance_size`
+The size of the instance. The following sizes are available for the following problem / uncertainty combinations:
+TABLE WITH AVAILABLE SIZES
+`--instance_id`
+The id of the instance. Can be chosen between 1 and 20.
+`--approach`
+The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel'.
 
 ### Discrete Uncertainty Sets
-From the [main directory](./), run
-```
-dist/bin/mibs -instance file_name.mps -feasCheckSolver CPLEX 
-```
-to solve the specified shortest path or knapsack instance with a discrete uncertainty set using the `MibS` solver.
+To solve instances with discrete uncertainty set using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed.
