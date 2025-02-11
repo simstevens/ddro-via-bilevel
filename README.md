@@ -34,7 +34,11 @@ The kind of uncertainty that is to be chosen, e.g. 'cont_budgeted', 'cont_knapsa
 `--instance_size`
 The size of the instance. The following sizes are available for the following problem / uncertainty combinations:
 
-TABLE WITH AVAILABLE SIZES
+|               | Shortest Path      | Knapsack                  | Portfolio           |
+|---------------|--------------------|---------------------------|---------------------|
+| Cont_Budgeted | {50, 75, ..., 300} | {1000, 2000, ..., 10 000} | {50, 100, ..., 500} |
+| Cont_Knapsack |          -         | {1000, 2000, ..., 10 000} |          -          |
+| Discrete      |   {2, 3, ..., 10}  |     {50, 60, ..., 150}    |          -          |
 
 `--instance_id`
 The id of the instance. Can be chosen between 1 and 20.
