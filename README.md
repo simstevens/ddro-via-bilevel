@@ -11,7 +11,7 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 * random
 * networkx
 
-Moreover, the bilevel problems obtained for the discrete uncertainty sets are solved using `MibS 1.2`. For more details on how to install `MibS` visit the [MibS Quick Start Guide][https://coin-or.github.io/MibS/].
+Moreover, the bilevel problems obtained for the discrete uncertainty sets are solved using `MibS 1.2`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/).
 
 ## Usage
 
