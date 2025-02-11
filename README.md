@@ -22,7 +22,7 @@ From the [main directory](./), run
 ```
 python3 -m ddro-via-bilevel --problem_class problem --uncertainty uncertainty --instance_size instance_size --instance_id instance_id --approach reformulation_approach
 ```
-to solve the specified instance with a continuous uncertainty set and the specified approach. To solve instances of the other models. 
+to solve the specified instance with a continuous uncertainty set and the specified approach.
 
 #### Necessary arguments:
 `--problem_class`
