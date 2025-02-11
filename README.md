@@ -14,6 +14,7 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 Moreover, the bilevel problems obtained for the discrete uncertainty sets are solved using `MibS 1.2`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/).
 
 ## Usage
+### Continuous Uncertainty Sets
 From the [main directory](./), run
 ```
 python3 -m src.shortest_path_cont_budg --instance_file file_name --approach approach_value
