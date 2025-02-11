@@ -22,18 +22,18 @@ From the [main directory](./), run
 ```
 python3 -m ddro-via-bilevel --problem_class problem --uncertainty uncertainty --instance_size instance_size --instance_id instance_id --approach reformulation_approach
 ```
-to solve the specified instance with a continuous uncertainty set and the specified approach. To solve instances of the other models. 
-Necessary arguments:
-`--problem_class`
-The problem that is to be solved, e.g. 'shortest_path', 'knapsack' or 'portfolio'.
-`--uncertainty`
-The kind of uncertainty that is to be chosen, e.g. 'cont_budgeted', 'cont_knapsack' or 'discrete'.
-`--instance_size`
-The size of the instance. The following sizes are available for the following problem / uncertainty combinations:
-TABLE WITH AVAILABLE SIZES
-`--instance_id`
-The id of the instance. Can be chosen between 1 and 20.
-`--approach`
+to solve the specified instance with a continuous uncertainty set and the specified approach. To solve instances of the other models. \
+Necessary arguments:\
+`--problem_class`\
+The problem that is to be solved, e.g. 'shortest_path', 'knapsack' or 'portfolio'.\
+`--uncertainty`\
+The kind of uncertainty that is to be chosen, e.g. 'cont_budgeted', 'cont_knapsack' or 'discrete'.\
+`--instance_size`\
+The size of the instance. The following sizes are available for the following problem / uncertainty combinations:\
+TABLE WITH AVAILABLE SIZES\
+`--instance_id`\
+The id of the instance. Can be chosen between 1 and 20.\
+`--approach`\
 The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel'.
 
 ### Discrete Uncertainty Sets
