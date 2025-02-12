@@ -1,3 +1,15 @@
+##################################################################
+# This file is part of the code used for the computational study #
+# in the paper                                                   #
+#                                                                #
+#  "Solving Decision-Dependent Robust Problems as Bilevel        #   
+#   Optimization Problems"                                       #
+#                                                                #
+# by Henri Lefebvre, Martin Schmidt, Simon Stevens,              #
+# and Johannes Thürauf (2025).                                   #
+##################################################################
+
+# Global imports
 import gurobipy as gp
 from gurobipy import GRB
 
