@@ -167,13 +167,7 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, c
     m.optimize()
 
 def solve_instance_bilevel(file_name):
-    ''' Solves the shortest path instance with the bilevel model
-
-    Parameters
-    --------------
-    file_name: string
-        path to instance
-    '''
+    ''' Solves the shortest path instance with the bilevel model'''
     # parse instanc
     arcs, nom_cost, cost_dev, source, target, nodes = parse_graph(file_name)
 
@@ -181,13 +175,7 @@ def solve_instance_bilevel(file_name):
     solve_model_bilevel(nodes, arcs, nom_cost, cost_dev, source, target)
 
 def solve_instance_robust(file_name):
-    ''' Solves the shortest path instance with the robust model
-
-    Parameters
-    --------------
-    file_name: string
-        path to instance
-    '''
+    ''' Solves the shortest path instance with the robust model'''
     # parse instance
     arcs, nom_cost, cost_dev, source, target, nodes = parse_graph(file_name)
 
@@ -238,21 +226,8 @@ def parse_graph(file_name, weight='weight'):
     return arcs, nom_cost, cost_dev, source, target, list(G.nodes())
 
 def get_source_target(file_name):
-    ''' Finds the source and target nodes in a graphml file
+    ''' Finds the source and target nodes in a graphml file'''
     
-    Parameters 
-    -------------
-    file_name: string
-        path to instance
-    
-    Returns
-    -------------
-    source: int
-        source node
-    target: int
-        target node
-    '''
-
     # read the graphml file as a networkx model
     G = nx.read_graphml(file_name)
     

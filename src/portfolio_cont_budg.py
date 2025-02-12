@@ -152,25 +152,15 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
     m.optimize()
 
 def solve_instance_bilevel(file_name):
-    """ Solves the instance with the bilevel approach
+    """ Solves the instance with the bilevel approach"""
 
-    Parameters
-    -------------
-    file_name : str
-        name of the instance file
-    """
     seed, n, k, max_variance, nom_return, covariance, return_dev, hedge_cost = parse_file(file_name)
 
     portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k)
 
 def solve_instance_robust(file_name):
-    """ Solves the instance with the robust approach
-
-    Parameters
-    -------------
-    file_name : str
-        name of the instance file
-    """
+    """ Solves the instance with the robust approach"""
+    
     seed, n, k, max_variance, nom_return, covariance, return_dev, hedge_cost = parse_file(file_name)
 
     portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k)
@@ -202,6 +192,7 @@ def parse_file(file_path):
     hedge_cost : list
         hedge costs for reducing the uncertainties
     """
+
     with open(file_path, 'r') as file:
         lines = file.readlines()
     

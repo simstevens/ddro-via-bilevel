@@ -145,13 +145,8 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, b, w, f):
     m.optimize()
 
 def solve_instance_bilevel(file_name):
-    ''' Solves the knapsack instance with the bilevel model
-
-    Parameters
-    --------------
-    file_name: string
-        path to instance
-    '''
+    ''' Solves the knapsack instance with the bilevel model'''
+    
     # parse instance
     number_of_items, capacity, nom_weights, weight_dev, values, b, w, f = parse_knapsack(file_name)
 
@@ -159,13 +154,8 @@ def solve_instance_bilevel(file_name):
     solve_model_bilevel(nom_weights, weight_dev, values, capacity, b, w, f)
 
 def solve_instance_robust(file_name):  
-    ''' Solves the knapsack instance with the robust model
+    ''' Solves the knapsack instance with the robust model'''
 
-    Parameters
-    --------------
-    file_name: string
-        path to instance
-    '''
     # parse instance
     number_of_items, capacity, nom_weights, weight_dev, values, b, w, f = parse_knapsack(file_name) 
 
