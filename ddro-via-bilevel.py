@@ -27,7 +27,12 @@ def get_instance_file(problem_class, uncertainty, instance_size, instance_id):
         "knapsack": {"cont_knapsack": ".kp", "cont_budgeted": ".kp", "discrete": ".mps"},
         "portfolio": {"cont_budgeted": ".po"},
     }
-    return base_path + extensions.get(problem_class, {}).get(uncertainty, "")
+    instance_file = base_path + extensions.get(problem_class, {}).get(uncertainty, "")
+    
+    if not os.path.exists(instance_file):
+        raise ValueError(f"Instance file '{instance_file}' not found. The requested instance size may not be available.")
+    
+    return instance_file
 
 def solve_instance(problem_class, uncertainty, approach, instance_file, mibs_directory):
     solvers = {
