@@ -47,4 +47,4 @@ The id of the instance. Can be chosen between 1 and 20.
 The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel'.
 
 ### Discrete Uncertainty Sets
-To solve instances with discrete uncertainty set using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed.
+To solve instances with discrete uncertainty set using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed. The default value is `/dist/bin/mibs`.
