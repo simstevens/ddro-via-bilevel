@@ -24,7 +24,8 @@ import portfolio_cont_budg
 import shortest_path_cont_budg
 
 def validate_arguments(arguments):
-    # validate the parsed arguments
+    """validate the parsed arguments"""
+
     if arguments.problem_class not in {"shortest_path", "knapsack", "portfolio"}:
         raise ValueError("Invalid problem class! Choose from 'shortest_path', 'knapsack', or 'portfolio'.")
     if arguments.uncertainty not in {"cont_knapsack", "cont_budgeted", "discrete"}:
@@ -35,7 +36,8 @@ def validate_arguments(arguments):
         raise ValueError("Instance ID must be between 1 and 20.")
 
 def get_instance_file(problem_class, uncertainty, instance_size, instance_id):
-    # get the instance file based on the parsed arguments
+    """get the instance file based on the parsed arguments"""
+
     base_path = f"./instances/{problem_class}/{uncertainty}/{problem_class}_{instance_size}_{instance_id}"
     extensions = {
         "shortest_path": {"cont_budgeted": ".graphml", "discrete": ".mps"},
@@ -50,7 +52,8 @@ def get_instance_file(problem_class, uncertainty, instance_size, instance_id):
     return instance_file
 
 def solve_instance(problem_class, uncertainty, approach, instance_file, mibs_directory):
-    # solve the parsed instance
+    """solve the parsed instance"""
+    
     solvers = {
         ("shortest_path", "cont_budgeted", "bilevel"): shortest_path_cont_budg.solve_instance_bilevel,
         ("shortest_path", "cont_budgeted", "robust"): shortest_path_cont_budg.solve_instance_robust,
