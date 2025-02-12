@@ -2,10 +2,9 @@ import gurobipy as gp
 from gurobipy import GRB
 import random
 import numpy as np
-import argparse
 
-def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, file_name, Gamma=50, gam=0.2):
-    """ Solves the knapsack problem with uncertain weights with the Bilevel Reformulation
+def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, gam=0.2):
+    """ Solves the knapsack problem with budgeted uncertainties with the Bilevel Reformulation
 
     Parameters
     -------------
@@ -17,14 +16,10 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, f
         list of the values of the items
     capacity: int
         capacity of the bag
-    b: float
-        constant parameter of uncertainty budget
-    w: list
-        list of weights in uncertainty budget
-    f: list
-        list of weights in knapsack uncertainty
-    file_name: string
-        name of the file that is being solved
+    hedge_cost : list
+        hedge costs for reducing the uncertainties
+    gam : float
+        fraction of uncertainty reduction
     """
 
     items = range(len(nom_weights))
@@ -32,6 +27,8 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, f
 
     # create a new model
     m = gp.Model("Knapsack Bilevel")
+
+    # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
 
@@ -51,11 +48,10 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, f
     # set objective
     m.setObjective(gp.quicksum(x[i] * values[i] for i in items) - gp.quicksum(hedge_cost[i] * y[i] for i in items), GRB.MAXIMIZE)
 
-    # add constraints
     # strong duality
     m.addConstr(pi * Gamma + gp.quicksum(lam[i] for i in items) - gp.quicksum(gam * s[i] for i in items) <= gp.quicksum(weight_dev[i] * r[i] for i in items))
 
-    # dual constraint
+    # dual lower level
     m.addConstrs(pi + lam[i] >= weight_dev[i] * x[i] for i in items)
 
     # primal upper level
@@ -81,17 +77,8 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, f
     print("\n######################################\n")
     m.optimize()
 
-    result=[]
-    for x_a in x: 
-        if x[x_a].x != 0:
-            result.append(x[x_a].varName)
-
-    print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
-             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_weights), ",", len(result))
-    #print("items ,",file_name.split("/")[-1],", bilevel ,",result)
-
-def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, file_name, Gamma=50, gam=0.2):
-    """ Solves the knapsack problem with uncertain weights with the Robust Reformulation
+def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, gam=0.2):
+    """ Solves the knapsack problem with budgeted uncertainties with the Robust Reformulation
 
     Parameters
     -------------
@@ -103,14 +90,10 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, fi
         list of the values of the items
     capacity: int
         capacity of the bag
-    b: float
-        constant parameter of uncertainty budget
-    w: list
-        list of weights in uncertainty budget
-    f: list
-        list of weights in knapsack uncertainty
-    file_name: string
-        name of the file that is being solved
+    hedge_cost : list
+        hedge costs for reducing the uncertainties
+    gam : float
+        fraction of uncertainty reduction
     """
 
     items = range(len(nom_weights))
@@ -118,6 +101,8 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, fi
 
     # create a new model
     m = gp.Model("Knapsack Robust")
+
+    # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
 
@@ -134,13 +119,13 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, fi
     # set objective
     m.setObjective(gp.quicksum(x[i] * values[i] for i in items) - gp.quicksum(hedge_cost[i] * y[i] for i in items), GRB.MAXIMIZE)
 
-    # add capacity constraint
+    # primal upper level
     m.addConstr(gp.quicksum(nom_weights[i] * x[i] for i in items)
                 + pi * Gamma
                 + gp.quicksum(lam[i] for i in items)
                 - gp.quicksum(gam * s[i] for i in items) <= capacity)
 
-    # dual constraint
+    # dual lower level
     m.addConstrs(pi + lam[i] >= weight_dev[i] * x[i] for i in items)
 
     # McCormick
@@ -151,15 +136,6 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, fi
     # optimize model
     print("\n######################################\n")
     m.optimize()
-
-    result=[]
-    for x_a in x: 
-        if x[x_a].x != 0:
-            result.append(x[x_a].varName)
-
-    print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
-             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_weights), ",", len(result))
-    #print("items ,",file_name.split("/")[-1],", robust ,",result)
 
 def parse_knapsack(file_path):
     ''' Parses a .kp file and returns the knapsack parameters
@@ -181,12 +157,9 @@ def parse_knapsack(file_path):
         list of deviations of the weights of the items
     values: list
         list of the values of the items
-    b: float
-        constant parameter of uncertainty budget
-    w: list
-        list of weights in uncertainty budget
-    f: list
-        list of weights in knapsack uncertainty
+    hedge_cost : list
+        hedge costs for reducing the uncertainties
+
     '''
     
     with open(file_path, 'r') as file:
@@ -226,7 +199,7 @@ def solve_instance_bilevel(file_name):
     number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost = parse_knapsack(file_name)
 
     # solve instance
-    solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, file_name)
+    solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost)
 
 def solve_instance_robust(file_name):  
     ''' Solves the knapsack instance with the robust model
@@ -240,22 +213,4 @@ def solve_instance_robust(file_name):
     number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost = parse_knapsack(file_name) 
 
     # solve instance
-    solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, file_name)
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--instance_file', required = True,
-                        help = 'The file containing the instance data.')
-    parser.add_argument('--approach', required = True,
-                        help = 'The approach to be used - "robust" or "bilevel".')
-    arguments = parser.parse_args()
-    approach = arguments.approach
-    instance_file = "./instances/knapsack/continuous_budgeted_uncertainty/" + arguments.instance_file + ".kp"
-
-    print(f"Solving instance {instance_file}")
-    if approach not in ["robust", "bilevel"]:
-        raise TypeError("Approach has to be either 'robust' or 'bilevel'!")
-    if approach == "robust": 
-        solve_instance_robust(instance_file)
-    if approach == "bilevel":
-        solve_instance_bilevel(instance_file)
+    solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost)

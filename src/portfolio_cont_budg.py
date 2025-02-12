@@ -1,11 +1,10 @@
 import gurobipy as gp
 from gurobipy import GRB, QuadExpr
-import argparse
 import numpy as np
 import random
 
-def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=2, gam=0.2):
-    """ Solves the portfolio problem with the Robust Reformulation
+def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k, Gamma=2, gam=0.2):
+    """ Solves the portfolio problem with budgeted uncertainty with the Bilevel Reformulation
 
     Parameters
     -------------
@@ -19,22 +18,22 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
         covariance matrix
     max_variance: float
         maximum allowed variance of the portfolio
+    k : int
+        cardinality constraint parameter
     Gamma: integer
         budget of the uncertainty set
     gam : float
         fraction of uncertainty reduction
-    k : int
-        cardinality constraint parameter
     """
 
     assets = range(len(nom_return))
     
     # create a new model
     m = gp.Model("Portfolio_Bilevel")
-    m.Params.Threads = 1
-    m.setParam('TimeLimit', 2*60*60)
 
     # set parameters
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
     m.Params.NonConvex = 2
 
     # create variables
@@ -49,17 +48,19 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     # set objective
     m.setObjective(gp.quicksum(nom_return[i] * y[i] for i in assets) - gp.quicksum(hedge_cost[i] * x[i] for i in assets)
                     - gp.quicksum(u[i] * return_dev[i] * y[i] for i in assets), GRB.MAXIMIZE)
-    print(return_dev)
+    
+    # primal upper level
     quad_expr = QuadExpr()
     for i in range(len(assets)):
         for j in range(len(assets)):
             quad_expr.add(covariance[i, j] * y[i] * y[j]) 
-    # add constraints
     m.addConstr(quad_expr <= max_variance, name="variance")
     m.addConstr(gp.quicksum(y[i] for i in assets) == 1, name="budget")
+
+    # dual lower level
     m.addConstrs((lam[i] + pi >= return_dev[i] * y[i] for i in assets), name="dual_lower")
-    print(return_dev)
-    # add uncertainty constraints
+
+    # primal lower level
     m.addConstr(gp.quicksum(u[i] for i in assets) <= Gamma, name="uncertainty_budget")
     m.addConstrs((u[i] <= 1 - gam * x[i] for i in assets), name="uncertainty_bound")
 
@@ -74,17 +75,8 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     print("\n######################################\n")
     m.optimize()
 
-    result=[]
-    for y_a in y: 
-       if y[y_a].x > 0.0001:
-           result.append((y[y_a].varName, y[y_a].X))
-
-    print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
-             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_return), ",", len(result))
-    print("assets ,",file_name.split("/")[-1],", bilevel ,",result)
-
-def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=2, gam=0.2):
-    """ Solves the portfolio problem with the Bilevel Reformulation
+def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k, Gamma=2, gam=0.2):
+    """ Solves the portfolio problem with budgeted uncertainty with the Robust Reformulation
 
     Parameters
     -------------
@@ -98,12 +90,12 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
         covariance matrix
     max_variance: float
         maximum allowed variance of the portfolio
+    k : int
+        cardinality constraint parameter
     Gamma: integer
         budget of the uncertainty set
     gam : float
         fraction of uncertainty reduction
-    k : int
-        cardinality constraint parameter
     """
 
     assets = range(len(nom_return))
@@ -112,6 +104,8 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
     m = gp.Model("Portfolio_Robust")
 
     # set parameters
+    m.Params.Threads = 1
+    m.setParam('TimeLimit', 2*60*60)
     m.Params.NonConvex = 2
 
     # create variables
@@ -126,13 +120,15 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
     m.setObjective(gp.quicksum(nom_return[i] * y[i] for i in assets) - gp.quicksum(hedge_cost[i] * x[i] for i in assets)
                     - pi * Gamma - gp.quicksum(lam[i] for i in assets) + gp.quicksum(lam[i] * gam * x[i] for i in assets), GRB.MAXIMIZE)
 
+    # primal upper level
     quad_expr = QuadExpr()
     for i in range(len(assets)):
         for j in range(len(assets)):
-            quad_expr.add(covariance[i, j] * y[i] * y[j])                
-    # add constraints
+            quad_expr.add(covariance[i, j] * y[i] * y[j])  
     m.addConstr(quad_expr <= max_variance, name="variance")
     m.addConstr(gp.quicksum(y[i] for i in assets) == 1, name="budget")
+
+    # dual lower level
     m.addConstrs((lam[i] + pi >= return_dev[i] * y[i] for i in assets), name="dual_lower")
 
     # cardinality constraints
@@ -143,33 +139,56 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
     print("\n######################################\n")
     m.optimize()
 
-    result=[]
-    for y_a in y: 
-        if y[y_a].x > 0.0001:
-            result.append((y[y_a].varName, y[y_a].X))
-
-    print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
-             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_return), ",", len(result))
-    print("assets ,",file_name.split("/")[-1],", robust ,",result)
-
 def solve_instance_bilevel(file_name):
+    """ Solves the instance with the bilevel approach
+
+    Parameters
+    -------------
+    file_name : str
+        name of the instance file
+    """
     seed, n, k, max_variance, nom_return, covariance, return_dev, hedge_cost = parse_file(file_name)
 
-    portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name,)
+    portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k)
 
 def solve_instance_robust(file_name):
+    """ Solves the instance with the robust approach
+
+    Parameters
+    -------------
+    file_name : str
+        name of the instance file
+    """
     seed, n, k, max_variance, nom_return, covariance, return_dev, hedge_cost = parse_file(file_name)
 
-    portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name,)
+    portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k)
 
 def parse_file(file_path):
-    """
-    Parses the input file and stores:
-    - Seed as an integer
-    - n as an integer
-    - k as an integer
-    - Expected returns as a list of floats
-    - Covariance matrix as a list of lists of floats
+    """Parses the .po file and returns the portfolio parameters
+
+    Parameters
+    -------------
+    file_name : str
+        name of the instance file
+
+    Returns 
+    -------------
+    seed : int
+        random seed
+    n : int
+        number of assets
+    k : int
+        cardinality parameter
+    max_variance: float
+        maximum allowed variance of the portfolio
+    expected_returns: list
+        list of expected returns of the assets
+    covariance_matrix : matrix
+        covariance matrix
+    return_dev : list
+        list of return deviations
+    hedge_cost : list
+        hedge costs for reducing the uncertainties
     """
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -206,22 +225,3 @@ def parse_file(file_path):
 
 
     return seed, n, k, max_variance, expected_returns, covariance_matrix, return_dev, hedge_cost
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--instance_file', required = True,
-                        help = 'The file containing the instance data.')
-    parser.add_argument('--approach', required = True,
-                        help = 'The approach to be used - "robust" or "bilevel".')
-    arguments = parser.parse_args()
-    approach = arguments.approach
-    instance_file = "./instances/portfolio/continuous_budgeted_uncertainty/" + arguments.instance_file + ".po"
-
-    print(f"Solving instance {instance_file}")
-
-    if approach not in ["robust", "bilevel"]:
-        raise TypeError("Approach has to be either 'robust' or 'bilevel'!")
-    if approach == "robust": 
-        solve_instance_robust(instance_file)
-    if approach == "bilevel":
-        solve_instance_bilevel(instance_file)
