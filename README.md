@@ -14,7 +14,7 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 * os
 * sys
 
-Moreover, the bilevel problems obtained for the discrete uncertainty sets can either be solved using `MibS 1.2` or `Yasol 4.0.1.5`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/). For more details on how to install `Yasol` visit the [Yasol Website](https://tm-vm-2.wiwi.uni-siegen.de/yasol-software.html) or the [Yasol GitHub](https://github.com/MichaelHartisch/Yasol).
+Moreover, the bilevel problems obtained for the discrete uncertainty sets can either be solved using `MibS 1.2` or `Yasol 4.0.1.5`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/). For more details on how to install `Yasol` visit the [Yasol Website](https://yasolqipsolver.github.io/yasol.github.io/) or the [Yasol GitHub](https://github.com/MichaelHartisch/Yasol).
 
 ## Usage
 ### Continuous Uncertainty Sets
