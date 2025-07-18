@@ -102,7 +102,7 @@ if __name__ == "__main__":
     parser.add_argument('--approach', required=True)
     parser.add_argument('--mibs_directory', required=False, default="./dist/bin/mibs")
     parser.add_argument('--yasol_directory', required=False, help="Directory for the yasol solver")
-    parser.add_argument('--yasol_type', required=False, choices=['bilevel', 'existeval', 'implicit'], 
+    parser.add_argument('--yasol_type', required=False, choices=['bilevel', 'existeval', 'implicit'],
                        help="Type of yasol .qlp file to use (bilevel, existeval, or implicit)")
     
     args = parser.parse_args()

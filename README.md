@@ -44,7 +44,10 @@ The size of the instance. The following sizes are available for the different pr
 The id of the instance. Can be chosen between 1 and 20.
 
 `--approach`
-The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel'.
+The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel' for continuous uncertainties and 'mibs' or 'yasol' for discrete uncertainties.
 
 ### Discrete Uncertainty Sets
-To solve instances with discrete uncertainty set using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed. The default value is `/dist/bin/mibs`.
+To solve instances with discrete uncertainty sets using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed. The default value is `/dist/bin/mibs`.
+
+To solve instances with discrete uncertainty sets using `Yasol`, the argument `--yasol_directory` can be addedto specify the directory where `Yasol` is installed. The default value is `/dist/bin/yasol`. 
+The argument `--yasol_type` has to be added to specify the type of `.qlp` formulation that should be used. The choices are `bilevel`, `existeval` and `implicit`.  
