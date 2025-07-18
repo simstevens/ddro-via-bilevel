@@ -14,7 +14,7 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 * os
 * sys
 
-Moreover, the bilevel problems obtained for the discrete uncertainty sets are solved using `MibS 1.2`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/).
+Moreover, the bilevel problems obtained for the discrete uncertainty sets can either be solved using `MibS 1.2` or `Yasol 4.0.1.5`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/). For more detail on how to install `Yasol` visit the [Yasol Website](https://tm-vm-2.wiwi.uni-siegen.de/yasol-software.html).
 
 ## Usage
 ### Continuous Uncertainty Sets
@@ -38,7 +38,7 @@ The size of the instance. The following sizes are available for the different pr
 |---------------|--------------------|---------------------------|---------------------|
 | Cont_Budgeted | {50, 75, ..., 300} | {1000, 2000, ..., 10 000} | {50, 100, ..., 500} |
 | Cont_Knapsack |          -         | {1000, 2000, ..., 10 000} |          -          |
-| Discrete      |   {2, 3, ..., 10}  |     {50, 60, ..., 150}    |          -          |
+| Discrete      |   {2, 3, ..., 10}  |     {20, 40, ..., 140}    |          -          |
 
 `--instance_id`
 The id of the instance. Can be chosen between 1 and 20.
