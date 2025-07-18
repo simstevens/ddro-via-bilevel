@@ -1,4 +1,4 @@
-* Signature: 0x2b3c2f32d9f8b44a
+* Signature: 0x2b3c2f32d9f9d57a
 NAME nohadani_2_20
 ROWS
  N  OBJ
@@ -13,31 +13,31 @@ ROWS
  G  mccormick3[1,0]
 COLUMNS
     MARKER    'MARKER'                 'INTORG'
-    y[0,1]    OBJ       5.0606323715519977e+01
+    y[0,1]    OBJ       65.49
     y[0,1]    flow_cons_source  1
     y[0,1]    flow_cons_target  1
     y[0,1]    mccormick2[0,1]  -1
     y[0,1]    mccormick3[0,1]  -1
-    y[1,0]    OBJ       5.0606323715519977e+01
+    y[1,0]    OBJ       65.49
     y[1,0]    flow_cons_source  -1
     y[1,0]    flow_cons_target  -1
     y[1,0]    mccormick2[1,0]  -1
     y[1,0]    mccormick3[1,0]  -1
     x[0,1]    OBJ       1
-    x[0,1]    primal_lower  2.9150392787816116e+01
+    x[0,1]    primal_lower  1.05
     x[1,0]    OBJ       1
-    x[1,0]    primal_lower  3.9987689703766939e+01
-    u[0,1]    primal_lower  83
+    x[1,0]    primal_lower  15.16
+    u[0,1]    primal_lower  10
     u[0,1]    mccormick1[0,1]  -1
     u[0,1]    mccormick3[0,1]  -1
-    u[1,0]    primal_lower  100
+    u[1,0]    primal_lower  62
     u[1,0]    mccormick1[1,0]  -1
     u[1,0]    mccormick3[1,0]  -1
-    r[0,1]    OBJ       5.0606323715519981e+00
+    r[0,1]    OBJ       6.5489999999999995e+00
     r[0,1]    mccormick1[0,1]  1
     r[0,1]    mccormick2[0,1]  1
     r[0,1]    mccormick3[0,1]  1
-    r[1,0]    OBJ       5.0606323715519981e+00
+    r[1,0]    OBJ       6.5489999999999995e+00
     r[1,0]    mccormick1[1,0]  1
     r[1,0]    mccormick2[1,0]  1
     r[1,0]    mccormick3[1,0]  1
@@ -45,7 +45,7 @@ COLUMNS
 RHS
     RHS1      flow_cons_source  1
     RHS1      flow_cons_target  1
-    RHS1      primal_lower  100
+    RHS1      primal_lower  62
     RHS1      mccormick3[0,1]  -1
     RHS1      mccormick3[1,0]  -1
 BOUNDS

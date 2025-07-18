@@ -3,27 +3,29 @@
 @NUMCONSTRS
 217
 @VARSBEGIN
-u[0,1] 0.0
 u[0,2] 0.0
+u[0,3] 0.0
 u[0,4] 0.0
-u[0,6] 0.0
+u[0,5] 0.0
+u[0,7] 0.0
 u[0,8] 0.0
-u[1,0] 0.0
+u[0,9] 0.0
+u[1,2] 0.0
 u[1,3] 0.0
 u[1,4] 0.0
-u[1,5] 0.0
-u[1,7] 0.0
-u[1,8] 0.0
+u[1,6] 0.0
 u[1,9] 0.0
 u[2,0] 0.0
+u[2,1] 0.0
+u[2,3] 0.0
 u[2,4] 0.0
-u[2,5] 0.0
-u[2,6] 0.0
 u[2,8] 0.0
 u[2,9] 0.0
+u[3,0] 0.0
 u[3,1] 0.0
+u[3,2] 0.0
 u[3,4] 0.0
-u[3,5] 0.0
+u[3,6] 0.0
 u[3,7] 0.0
 u[3,8] 0.0
 u[3,9] 0.0
@@ -36,22 +38,20 @@ u[4,6] 0.0
 u[4,7] 0.0
 u[4,8] 0.0
 u[4,9] 0.0
-u[5,1] 0.0
-u[5,2] 0.0
-u[5,3] 0.0
+u[5,0] 0.0
 u[5,4] 0.0
 u[5,6] 0.0
 u[5,7] 0.0
 u[5,8] 0.0
 u[5,9] 0.0
-u[6,0] 0.0
-u[6,2] 0.0
+u[6,1] 0.0
+u[6,3] 0.0
 u[6,4] 0.0
 u[6,5] 0.0
 u[6,7] 0.0
 u[6,8] 0.0
 u[6,9] 0.0
-u[7,1] 0.0
+u[7,0] 0.0
 u[7,3] 0.0
 u[7,4] 0.0
 u[7,5] 0.0
@@ -59,7 +59,6 @@ u[7,6] 0.0
 u[7,8] 0.0
 u[7,9] 0.0
 u[8,0] 0.0
-u[8,1] 0.0
 u[8,2] 0.0
 u[8,3] 0.0
 u[8,4] 0.0
@@ -67,6 +66,7 @@ u[8,5] 0.0
 u[8,6] 0.0
 u[8,7] 0.0
 u[8,9] 0.0
+u[9,0] 0.0
 u[9,1] 0.0
 u[9,2] 0.0
 u[9,3] 0.0
@@ -75,102 +75,104 @@ u[9,5] 0.0
 u[9,6] 0.0
 u[9,7] 0.0
 u[9,8] 0.0
-r[0,1] -6.800735254367722
-r[0,2] -1.9235384061671343
-r[0,4] -5.79827560572969
-r[0,6] -3.4000000000000004
-r[0,8] -5.508175741568165
-r[1,0] -6.800735254367722
-r[1,3] -4.052159917870962
-r[1,4] -4.825971404805462
-r[1,5] -6.087692502089769
-r[1,7] -2.121320343559643
-r[1,8] -1.3152946437965907
-r[1,9] -4.491102314577124
-r[2,0] -1.9235384061671343
-r[2,4] -4.919349550499538
-r[2,5] -6.940461079784254
-r[2,6] -1.5297058540778357
-r[2,8] -6.016643582596529
-r[2,9] -6.723094525588644
-r[3,1] -4.052159917870962
-r[3,4] -3.8013155617496426
-r[3,5] -3.2802438933713454
-r[3,7] -1.969771560359221
-r[3,8] -4.410215414239989
-r[3,9] -2.0615528128088303
-r[4,0] -5.79827560572969
-r[4,1] -4.825971404805462
-r[4,2] -4.919349550499538
-r[4,3] -3.8013155617496426
-r[4,5] -2.247220505424423
-r[4,6] -4.159326868617085
-r[4,7] -3.5510561809129406
-r[4,8] -4.049691346263318
-r[4,9] -1.8439088914585775
-r[5,1] -6.087692502089769
-r[5,2] -6.940461079784254
-r[5,3] -3.2802438933713454
-r[5,4] -2.247220505424423
-r[5,6] -5.903388857258177
-r[5,7] -4.204759208325728
-r[5,8] -5.70350769263968
-r[5,9] -1.6155494421403511
-r[6,0] -3.4000000000000004
-r[6,2] -1.5297058540778357
-r[6,4] -4.159326868617085
-r[6,5] -5.903388857258177
-r[6,7] -7.200694410957877
-r[6,8] -6.313477647065839
-r[6,9] -6.001666435249463
-r[7,1] -2.121320343559643
-r[7,3] -1.969771560359221
-r[7,4] -3.5510561809129406
-r[7,5] -4.204759208325728
-r[7,6] -7.200694410957877
-r[7,8] -2.4839484696748446
-r[7,9] -2.5942243542145693
-r[8,0] -5.508175741568165
-r[8,1] -1.3152946437965907
-r[8,2] -6.016643582596529
-r[8,3] -4.410215414239989
-r[8,4] -4.049691346263318
-r[8,5] -5.70350769263968
-r[8,6] -6.313477647065839
-r[8,7] -2.4839484696748446
-r[8,9] -4.219004621945798
-r[9,1] -4.491102314577124
-r[9,2] -6.723094525588644
-r[9,3] -2.0615528128088303
-r[9,4] -1.8439088914585775
-r[9,5] -1.6155494421403511
-r[9,6] -6.001666435249463
-r[9,7] -2.5942243542145693
-r[9,8] -4.219004621945798
+r[0,2] -3.5
+r[0,3] -5.045000000000001
+r[0,4] -1.9920000000000002
+r[0,5] -4.031000000000001
+r[0,7] -3.94
+r[0,8] -1.6280000000000001
+r[0,9] -5.597
+r[1,2] -4.002000000000001
+r[1,3] -1.2000000000000002
+r[1,4] -5.385000000000001
+r[1,6] -5.349
+r[1,9] -2.9530000000000003
+r[2,0] -3.5
+r[2,1] -4.002000000000001
+r[2,3] -3.912
+r[2,4] -4.519
+r[2,8] -4.7540000000000004
+r[2,9] -5.566
+r[3,0] -5.045000000000001
+r[3,1] -1.2000000000000002
+r[3,2] -3.912
+r[3,4] -4.294
+r[3,6] -4.2490000000000006
+r[3,7] -4.809000000000001
+r[3,8] -5.077000000000001
+r[3,9] -1.9800000000000002
+r[4,0] -1.9920000000000002
+r[4,1] -5.385000000000001
+r[4,2] -4.519
+r[4,3] -4.294
+r[4,5] -2.47
+r[4,6] -3.9000000000000004
+r[4,7] -1.972
+r[4,8] -0.86
+r[4,9] -4.162
+r[5,0] -4.031000000000001
+r[5,4] -2.47
+r[5,6] -3.78
+r[5,7] -1.526
+r[5,8] -2.408
+r[5,9] -5.324000000000001
+r[6,1] -5.349
+r[6,3] -4.2490000000000006
+r[6,4] -3.9000000000000004
+r[6,5] -3.78
+r[6,7] -2.4170000000000003
+r[6,8] -4.627000000000001
+r[6,9] -2.452
+r[7,0] -3.94
+r[7,3] -4.809000000000001
+r[7,4] -1.972
+r[7,5] -1.526
+r[7,6] -2.4170000000000003
+r[7,8] -2.452
+r[7,9] -3.801
+r[8,0] -1.6280000000000001
+r[8,2] -4.7540000000000004
+r[8,3] -5.077000000000001
+r[8,4] -0.86
+r[8,5] -2.408
+r[8,6] -4.627000000000001
+r[8,7] -2.452
+r[8,9] -5.022
+r[9,0] -5.597
+r[9,1] -2.9530000000000003
+r[9,2] -5.566
+r[9,3] -1.9800000000000002
+r[9,4] -4.162
+r[9,5] -5.324000000000001
+r[9,6] -2.452
+r[9,7] -3.801
+r[9,8] -5.022
 @VARSEND
 @CONSTRSBEGIN
 primal_lower
-mccormick1[0,1]
 mccormick1[0,2]
+mccormick1[0,3]
 mccormick1[0,4]
-mccormick1[0,6]
+mccormick1[0,5]
+mccormick1[0,7]
 mccormick1[0,8]
-mccormick1[1,0]
+mccormick1[0,9]
+mccormick1[1,2]
 mccormick1[1,3]
 mccormick1[1,4]
-mccormick1[1,5]
-mccormick1[1,7]
-mccormick1[1,8]
+mccormick1[1,6]
 mccormick1[1,9]
 mccormick1[2,0]
+mccormick1[2,1]
+mccormick1[2,3]
 mccormick1[2,4]
-mccormick1[2,5]
-mccormick1[2,6]
 mccormick1[2,8]
 mccormick1[2,9]
+mccormick1[3,0]
 mccormick1[3,1]
+mccormick1[3,2]
 mccormick1[3,4]
-mccormick1[3,5]
+mccormick1[3,6]
 mccormick1[3,7]
 mccormick1[3,8]
 mccormick1[3,9]
@@ -183,22 +185,20 @@ mccormick1[4,6]
 mccormick1[4,7]
 mccormick1[4,8]
 mccormick1[4,9]
-mccormick1[5,1]
-mccormick1[5,2]
-mccormick1[5,3]
+mccormick1[5,0]
 mccormick1[5,4]
 mccormick1[5,6]
 mccormick1[5,7]
 mccormick1[5,8]
 mccormick1[5,9]
-mccormick1[6,0]
-mccormick1[6,2]
+mccormick1[6,1]
+mccormick1[6,3]
 mccormick1[6,4]
 mccormick1[6,5]
 mccormick1[6,7]
 mccormick1[6,8]
 mccormick1[6,9]
-mccormick1[7,1]
+mccormick1[7,0]
 mccormick1[7,3]
 mccormick1[7,4]
 mccormick1[7,5]
@@ -206,7 +206,6 @@ mccormick1[7,6]
 mccormick1[7,8]
 mccormick1[7,9]
 mccormick1[8,0]
-mccormick1[8,1]
 mccormick1[8,2]
 mccormick1[8,3]
 mccormick1[8,4]
@@ -214,6 +213,7 @@ mccormick1[8,5]
 mccormick1[8,6]
 mccormick1[8,7]
 mccormick1[8,9]
+mccormick1[9,0]
 mccormick1[9,1]
 mccormick1[9,2]
 mccormick1[9,3]
@@ -222,27 +222,29 @@ mccormick1[9,5]
 mccormick1[9,6]
 mccormick1[9,7]
 mccormick1[9,8]
-mccormick2[0,1]
 mccormick2[0,2]
+mccormick2[0,3]
 mccormick2[0,4]
-mccormick2[0,6]
+mccormick2[0,5]
+mccormick2[0,7]
 mccormick2[0,8]
-mccormick2[1,0]
+mccormick2[0,9]
+mccormick2[1,2]
 mccormick2[1,3]
 mccormick2[1,4]
-mccormick2[1,5]
-mccormick2[1,7]
-mccormick2[1,8]
+mccormick2[1,6]
 mccormick2[1,9]
 mccormick2[2,0]
+mccormick2[2,1]
+mccormick2[2,3]
 mccormick2[2,4]
-mccormick2[2,5]
-mccormick2[2,6]
 mccormick2[2,8]
 mccormick2[2,9]
+mccormick2[3,0]
 mccormick2[3,1]
+mccormick2[3,2]
 mccormick2[3,4]
-mccormick2[3,5]
+mccormick2[3,6]
 mccormick2[3,7]
 mccormick2[3,8]
 mccormick2[3,9]
@@ -255,22 +257,20 @@ mccormick2[4,6]
 mccormick2[4,7]
 mccormick2[4,8]
 mccormick2[4,9]
-mccormick2[5,1]
-mccormick2[5,2]
-mccormick2[5,3]
+mccormick2[5,0]
 mccormick2[5,4]
 mccormick2[5,6]
 mccormick2[5,7]
 mccormick2[5,8]
 mccormick2[5,9]
-mccormick2[6,0]
-mccormick2[6,2]
+mccormick2[6,1]
+mccormick2[6,3]
 mccormick2[6,4]
 mccormick2[6,5]
 mccormick2[6,7]
 mccormick2[6,8]
 mccormick2[6,9]
-mccormick2[7,1]
+mccormick2[7,0]
 mccormick2[7,3]
 mccormick2[7,4]
 mccormick2[7,5]
@@ -278,7 +278,6 @@ mccormick2[7,6]
 mccormick2[7,8]
 mccormick2[7,9]
 mccormick2[8,0]
-mccormick2[8,1]
 mccormick2[8,2]
 mccormick2[8,3]
 mccormick2[8,4]
@@ -286,6 +285,7 @@ mccormick2[8,5]
 mccormick2[8,6]
 mccormick2[8,7]
 mccormick2[8,9]
+mccormick2[9,0]
 mccormick2[9,1]
 mccormick2[9,2]
 mccormick2[9,3]
@@ -294,27 +294,29 @@ mccormick2[9,5]
 mccormick2[9,6]
 mccormick2[9,7]
 mccormick2[9,8]
-mccormick3[0,1]
 mccormick3[0,2]
+mccormick3[0,3]
 mccormick3[0,4]
-mccormick3[0,6]
+mccormick3[0,5]
+mccormick3[0,7]
 mccormick3[0,8]
-mccormick3[1,0]
+mccormick3[0,9]
+mccormick3[1,2]
 mccormick3[1,3]
 mccormick3[1,4]
-mccormick3[1,5]
-mccormick3[1,7]
-mccormick3[1,8]
+mccormick3[1,6]
 mccormick3[1,9]
 mccormick3[2,0]
+mccormick3[2,1]
+mccormick3[2,3]
 mccormick3[2,4]
-mccormick3[2,5]
-mccormick3[2,6]
 mccormick3[2,8]
 mccormick3[2,9]
+mccormick3[3,0]
 mccormick3[3,1]
+mccormick3[3,2]
 mccormick3[3,4]
-mccormick3[3,5]
+mccormick3[3,6]
 mccormick3[3,7]
 mccormick3[3,8]
 mccormick3[3,9]
@@ -327,22 +329,20 @@ mccormick3[4,6]
 mccormick3[4,7]
 mccormick3[4,8]
 mccormick3[4,9]
-mccormick3[5,1]
-mccormick3[5,2]
-mccormick3[5,3]
+mccormick3[5,0]
 mccormick3[5,4]
 mccormick3[5,6]
 mccormick3[5,7]
 mccormick3[5,8]
 mccormick3[5,9]
-mccormick3[6,0]
-mccormick3[6,2]
+mccormick3[6,1]
+mccormick3[6,3]
 mccormick3[6,4]
 mccormick3[6,5]
 mccormick3[6,7]
 mccormick3[6,8]
 mccormick3[6,9]
-mccormick3[7,1]
+mccormick3[7,0]
 mccormick3[7,3]
 mccormick3[7,4]
 mccormick3[7,5]
@@ -350,7 +350,6 @@ mccormick3[7,6]
 mccormick3[7,8]
 mccormick3[7,9]
 mccormick3[8,0]
-mccormick3[8,1]
 mccormick3[8,2]
 mccormick3[8,3]
 mccormick3[8,4]
@@ -358,6 +357,7 @@ mccormick3[8,5]
 mccormick3[8,6]
 mccormick3[8,7]
 mccormick3[8,9]
+mccormick3[9,0]
 mccormick3[9,1]
 mccormick3[9,2]
 mccormick3[9,3]

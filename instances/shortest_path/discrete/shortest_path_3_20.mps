@@ -1,8 +1,8 @@
-* Signature: 0xf9a0f44b955a6a9b
+* Signature: 0xf9a0f44b955b8bcb
 NAME nohadani_3_20
 ROWS
  N  OBJ
- E  flow_cons_inner_nodes[0]
+ E  flow_cons_inner_nodes[2]
  E  flow_cons_source
  E  flow_cons_target
  L  primal_lower
@@ -26,87 +26,87 @@ ROWS
  G  mccormick3[2,1]
 COLUMNS
     MARKER    'MARKER'                 'INTORG'
-    y[0,1]    OBJ       3.2893768406797051e+01
-    y[0,1]    flow_cons_inner_nodes[0]  -1
-    y[0,1]    flow_cons_source  -1
+    y[0,1]    OBJ       65.49
+    y[0,1]    flow_cons_source  1
+    y[0,1]    flow_cons_target  1
     y[0,1]    mccormick2[0,1]  -1
     y[0,1]    mccormick3[0,1]  -1
-    y[0,2]    OBJ       3
-    y[0,2]    flow_cons_inner_nodes[0]  -1
-    y[0,2]    flow_cons_target  1
+    y[0,2]    OBJ       22.02
+    y[0,2]    flow_cons_inner_nodes[2]  1
+    y[0,2]    flow_cons_source  1
     y[0,2]    mccormick2[0,2]  -1
     y[0,2]    mccormick3[0,2]  -1
-    y[1,0]    OBJ       3.2893768406797051e+01
-    y[1,0]    flow_cons_inner_nodes[0]  1
-    y[1,0]    flow_cons_source  1
+    y[1,0]    OBJ       65.49
+    y[1,0]    flow_cons_source  -1
+    y[1,0]    flow_cons_target  -1
     y[1,0]    mccormick2[1,0]  -1
     y[1,0]    mccormick3[1,0]  -1
-    y[1,2]    OBJ       34.0147027033899
-    y[1,2]    flow_cons_source  1
-    y[1,2]    flow_cons_target  1
+    y[1,2]    OBJ       51.79
+    y[1,2]    flow_cons_inner_nodes[2]  1
+    y[1,2]    flow_cons_target  -1
     y[1,2]    mccormick2[1,2]  -1
     y[1,2]    mccormick3[1,2]  -1
-    y[2,0]    OBJ       3
-    y[2,0]    flow_cons_inner_nodes[0]  1
-    y[2,0]    flow_cons_target  -1
+    y[2,0]    OBJ       22.02
+    y[2,0]    flow_cons_inner_nodes[2]  -1
+    y[2,0]    flow_cons_source  -1
     y[2,0]    mccormick2[2,0]  -1
     y[2,0]    mccormick3[2,0]  -1
-    y[2,1]    OBJ       34.0147027033899
-    y[2,1]    flow_cons_source  -1
-    y[2,1]    flow_cons_target  -1
+    y[2,1]    OBJ       51.79
+    y[2,1]    flow_cons_inner_nodes[2]  -1
+    y[2,1]    flow_cons_target  1
     y[2,1]    mccormick2[2,1]  -1
     y[2,1]    mccormick3[2,1]  -1
     x[0,1]    OBJ       1
-    x[0,1]    primal_lower  5.5112691332105723e-01
+    x[0,1]    primal_lower  0.43
     x[0,2]    OBJ       1
-    x[0,2]    primal_lower  4.0327753545659615e+00
+    x[0,2]    primal_lower  6.28
     x[1,0]    OBJ       1
-    x[1,0]    primal_lower  7.1041680721433789e+00
+    x[1,0]    primal_lower  10.86
     x[1,2]    OBJ       1
-    x[1,2]    primal_lower  7.9532763632833321e+00
+    x[1,2]    primal_lower  5.28
     x[2,0]    OBJ       1
-    x[2,0]    primal_lower  1.0591638194630482e+01
+    x[2,0]    primal_lower  8.1
     x[2,1]    OBJ       1
-    x[2,1]    primal_lower  1.1835269302611248e+01
-    u[0,1]    primal_lower  45
+    x[2,1]    primal_lower  3.73
+    u[0,1]    primal_lower  10
     u[0,1]    mccormick1[0,1]  -1
     u[0,1]    mccormick3[0,1]  -1
-    u[0,2]    primal_lower  97
+    u[0,2]    primal_lower  62
     u[0,2]    mccormick1[0,2]  -1
     u[0,2]    mccormick3[0,2]  -1
-    u[1,0]    primal_lower  11
+    u[1,0]    primal_lower  36
     u[1,0]    mccormick1[1,0]  -1
     u[1,0]    mccormick3[1,0]  -1
-    u[1,2]    primal_lower  16
+    u[1,2]    primal_lower  77
     u[1,2]    mccormick1[1,2]  -1
     u[1,2]    mccormick3[1,2]  -1
-    u[2,0]    primal_lower  17
+    u[2,0]    primal_lower  50
     u[2,0]    mccormick1[2,0]  -1
     u[2,0]    mccormick3[2,0]  -1
-    u[2,1]    primal_lower  3
+    u[2,1]    primal_lower  56
     u[2,1]    mccormick1[2,1]  -1
     u[2,1]    mccormick3[2,1]  -1
-    r[0,1]    OBJ       3.2893768406797053e+00
+    r[0,1]    OBJ       6.5489999999999995e+00
     r[0,1]    mccormick1[0,1]  1
     r[0,1]    mccormick2[0,1]  1
     r[0,1]    mccormick3[0,1]  1
-    r[0,2]    OBJ       3.0000000000000004e-01
+    r[0,2]    OBJ       2.202
     r[0,2]    mccormick1[0,2]  1
     r[0,2]    mccormick2[0,2]  1
     r[0,2]    mccormick3[0,2]  1
-    r[1,0]    OBJ       3.2893768406797053e+00
+    r[1,0]    OBJ       6.5489999999999995e+00
     r[1,0]    mccormick1[1,0]  1
     r[1,0]    mccormick2[1,0]  1
     r[1,0]    mccormick3[1,0]  1
-    r[1,2]    OBJ       3.40147027033899
+    r[1,2]    OBJ       5.179
     r[1,2]    mccormick1[1,2]  1
     r[1,2]    mccormick2[1,2]  1
     r[1,2]    mccormick3[1,2]  1
-    r[2,0]    OBJ       3.0000000000000004e-01
+    r[2,0]    OBJ       2.202
     r[2,0]    mccormick1[2,0]  1
     r[2,0]    mccormick2[2,0]  1
     r[2,0]    mccormick3[2,0]  1
-    r[2,1]    OBJ       3.40147027033899
+    r[2,1]    OBJ       5.179
     r[2,1]    mccormick1[2,1]  1
     r[2,1]    mccormick2[2,1]  1
     r[2,1]    mccormick3[2,1]  1
@@ -114,7 +114,7 @@ COLUMNS
 RHS
     RHS1      flow_cons_source  1
     RHS1      flow_cons_target  1
-    RHS1      primal_lower  97
+    RHS1      primal_lower  77
     RHS1      mccormick3[0,1]  -1
     RHS1      mccormick3[0,2]  -1
     RHS1      mccormick3[1,0]  -1
