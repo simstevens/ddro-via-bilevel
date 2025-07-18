@@ -14,7 +14,7 @@ The methods are implemented in `Python 3.12.2` and `Gurobi 11.0.3` is used to so
 * os
 * sys
 
-Moreover, the bilevel problems obtained for the discrete uncertainty sets can either be solved using `MibS 1.2` or `Yasol 4.0.1.5`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/). For more detail on how to install `Yasol` visit the [Yasol Website](https://tm-vm-2.wiwi.uni-siegen.de/yasol-software.html).
+Moreover, the bilevel problems obtained for the discrete uncertainty sets can either be solved using `MibS 1.2` or `Yasol 4.0.1.5`. For more details on how to install `MibS` visit the [MibS Quick Start Guide](https://coin-or.github.io/MibS/). For more details on how to install `Yasol` visit the [Yasol Website](https://tm-vm-2.wiwi.uni-siegen.de/yasol-software.html).
 
 ## Usage
 ### Continuous Uncertainty Sets
@@ -49,5 +49,5 @@ The approach that shall be used to solve the problem, e.g. 'robust' or 'bilevel'
 ### Discrete Uncertainty Sets
 To solve instances with discrete uncertainty sets using `MibS`, the argument `--mibs_directory` can be added to specify the directory where `MibS` is installed. The default value is `/dist/bin/mibs`.
 
-To solve instances with discrete uncertainty sets using `Yasol`, the argument `--yasol_directory` can be addedto specify the directory where `Yasol` is installed. The default value is `/dist/bin/yasol`. 
+To solve instances with discrete uncertainty sets using `Yasol`, the argument `--yasol_directory` can be added to specify the directory where `Yasol` is installed. The default value is `/dist/bin/yasol`. 
 The argument `--yasol_type` has to be added to specify the type of `.qlp` formulation that should be used. The choices are `bilevel`, `existeval` and `implicit`.  
