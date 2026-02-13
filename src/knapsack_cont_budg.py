@@ -15,7 +15,7 @@ from gurobipy import GRB
 import random
 import numpy as np
 
-def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, gam=0.2):
+def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,file_name, gam=0.2):
     """ Solves the knapsack problem with budgeted uncertainties with the Bilevel Reformulation
 
     Parameters
@@ -35,7 +35,7 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, g
     """
 
     items = range(len(nom_weights))
-    Gamma = 0.30 * len(nom_weights)
+    Gamma = 0.01 * len(nom_weights)
 
     # create a new model
     m = gp.Model("Knapsack Bilevel")
@@ -43,15 +43,16 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, g
     # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
+    #m.setParam("MIPGap", 1e-6)
 
     # create variables
-    x = m.addVars(items, vtype = GRB.BINARY, name = "decision")
-    y = m.addVars(items, vtype = GRB.BINARY, name = "hedge_decision")
+    x = m.addVars(items, vtype = GRB.BINARY, name = "x")
+    y = m.addVars(items, vtype = GRB.BINARY, name = "y")
     u = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "u")
     lam = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, name = "lambda")
     pi = m.addVar(vtype = GRB.CONTINUOUS, lb = 0, name = "pi")
     s = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, name = "s") # lam*y
-    r = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, name = "r") # u*x
+    r = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "r") # u*x
 
     # define McCormick bigMs
     M_lam = weight_dev.copy()
@@ -61,35 +62,41 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, g
     m.setObjective(gp.quicksum(x[i] * values[i] for i in items) - gp.quicksum(hedge_cost[i] * y[i] for i in items), GRB.MAXIMIZE)
 
     # strong duality
-    m.addConstr(pi * Gamma + gp.quicksum(lam[i] for i in items) - gp.quicksum(gam * s[i] for i in items) <= gp.quicksum(weight_dev[i] * r[i] for i in items))
+    m.addConstr((pi * Gamma + gp.quicksum(lam[i] for i in items) - gp.quicksum(gam * s[i] for i in items) <= gp.quicksum(weight_dev[i] * r[i] for i in items)), name="strong_duality")
 
     # dual lower level
-    m.addConstrs(pi + lam[i] >= weight_dev[i] * x[i] for i in items)
+    m.addConstrs(((pi + lam[i] >= weight_dev[i] * x[i]) for i in items), name="dual_lower_level")
 
     # primal upper level
-    m.addConstr(gp.quicksum(nom_weights[i] * x[i] for i in items)
-                + pi * Gamma
-                + gp.quicksum(lam[i] for i in items)
-                - gp.quicksum(gam * s[i] for i in items) <= capacity)
+    m.addConstr(gp.quicksum(nom_weights[i] * x[i] + weight_dev[i] * r[i] for i in items) <= capacity)
 
     # primal lower level
-    m.addConstrs(u[i] <= 1 - gam * y[i] for i in items)
-    m.addConstr(gp.quicksum(u[i] for i in items) <= Gamma)
+    m.addConstrs((u[i] <= 1 - gam * y[i] for i in items), name="primal_lower_level")
+    m.addConstr(gp.quicksum(u[i] for i in items) <= Gamma, name="primal_lower_level_sum")
 
     # McCormick
-    m.addConstrs(s[i] - M_lam[i] * y[i] <= 0 for i in items)
-    m.addConstrs(s[i] - lam[i] <= 0 for i in items)
-    m.addConstrs(lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items)
+    m.addConstrs((s[i] - M_lam[i] * y[i] <= 0 for i in items), name="mccormick_s_y")
+    m.addConstrs((s[i] - lam[i] <= 0 for i in items), name="mccormick_s_lam")
+    m.addConstrs((lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
 
-    m.addConstrs(r[i] <= u[i] for i in items)
-    m.addConstrs(r[i] <= M_u * x[i] for i in items)
-    m.addConstrs(r[i] >= u[i] - M_u * (1 - x[i]) for i in items)
+    m.addConstrs((r[i] <= u[i] for i in items), name="mccormick_r_u")
+    m.addConstrs((r[i] <= M_u * x[i] for i in items), name="mccormick_r_x")
+    m.addConstrs((r[i] >= u[i] - M_u * (1 - x[i]) for i in items), name="mccormick_r_u_x")
 
     # optimize model
     print("\n######################################\n")
+    #m.write("knapsack_bilevel.lp")
     m.optimize()
+    
+    result = m.getVars()
+    for var in result:
+        if "x" in var.VarName or "y" in var.VarName:
+            if var.X > 0.0001:
+                print(var.VarName, var.X)
+    print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
+             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_weights))
 
-def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, gam=0.2):
+def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost,file_name, gam=0.2):
     """ Solves the knapsack problem with budgeted uncertainties with the Robust Reformulation
 
     Parameters
@@ -109,7 +116,7 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, ga
     """
 
     items = range(len(nom_weights))
-    Gamma = 0.30 * len(nom_weights)
+    Gamma = 0.01 * len(nom_weights)
 
     # create a new model
     m = gp.Model("Knapsack Robust")
@@ -117,10 +124,11 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, ga
     # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
+    m.setParam("MIPGap", 1e-6)
 
     # create variables
-    x = m.addVars(items, vtype = GRB.BINARY, name = "decision")
-    y = m.addVars(items, vtype = GRB.BINARY, name = "hedge_decision")
+    x = m.addVars(items, vtype = GRB.BINARY, name = "x")
+    y = m.addVars(items, vtype = GRB.BINARY, name = "y")
     lam = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, name = "lambda")
     pi = m.addVar(vtype = GRB.CONTINUOUS, lb = 0, name = "pi")
     s = m.addVars(items, vtype = GRB.CONTINUOUS, lb = 0, name = "s") # lam*y
@@ -132,22 +140,31 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, ga
     m.setObjective(gp.quicksum(x[i] * values[i] for i in items) - gp.quicksum(hedge_cost[i] * y[i] for i in items), GRB.MAXIMIZE)
 
     # primal upper level
-    m.addConstr(gp.quicksum(nom_weights[i] * x[i] for i in items)
+    m.addConstr((gp.quicksum(nom_weights[i] * x[i] for i in items)
                 + pi * Gamma
                 + gp.quicksum(lam[i] for i in items)
-                - gp.quicksum(gam * s[i] for i in items) <= capacity)
+                - gp.quicksum(gam * s[i] for i in items) <= capacity), name="primal_upper_level")
 
     # dual lower level
-    m.addConstrs(pi + lam[i] >= weight_dev[i] * x[i] for i in items)
+    m.addConstrs((pi + lam[i] >= weight_dev[i] * x[i] for i in items), name="dual_lower_level")
 
     # McCormick
-    m.addConstrs(s[i] - M_lam[i] * y[i] <= 0 for i in items)
-    m.addConstrs(s[i] - lam[i] <= 0 for i in items)
-    m.addConstrs(lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items)
+    m.addConstrs((s[i] - M_lam[i] * y[i] <= 0 for i in items), name="mccormick_s_y")
+    m.addConstrs((s[i] - lam[i] <= 0 for i in items), name="mccormick_s_lam")
+    m.addConstrs((lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
 
     # optimize model
     print("\n######################################\n")
+    #m.write("knapsack_robust.lp")
     m.optimize()
+    
+    result = m.getVars()
+    for var in result:
+        if "x" in var.VarName or "y" in var.VarName:
+            if var.X > 0.0001:
+                print(var.VarName, var.X)
+    print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
+             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_weights))
 
 def parse_knapsack(file_path):
     ''' Parses a .kp file and returns the knapsack parameters
@@ -195,7 +212,7 @@ def parse_knapsack(file_path):
         nom_weights.append(nom)
         weight_dev.append(dev)
         values.append(val)
-        hedge_cost.append(random.uniform(val/10, val/5))
+        hedge_cost.append(round(random.uniform(val*0.1, val*0.2),2))
         idx += 1
     return number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost
 
@@ -206,7 +223,7 @@ def solve_instance_bilevel(file_name):
     number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost = parse_knapsack(file_name)
 
     # solve instance
-    solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost)
+    solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost, file_name)
 
 def solve_instance_robust(file_name):  
     ''' Solves the knapsack instance with the robust model'''
@@ -215,4 +232,4 @@ def solve_instance_robust(file_name):
     number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost = parse_knapsack(file_name) 
 
     # solve instance
-    solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost)
+    solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost, file_name)

@@ -1,0 +1,265 @@
+\ Model sp_8_10
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+\ Signature: 0xf0d5bc839e6ff29
+Minimize
+  49.09 y[0,2] + 18.11 y[0,3] + 22.02 y[0,4] + 24.76 y[0,5] + 50.99 y[0,6]
+   + 46.39 y[0,7] + 35.85 y[1,2] + 58 y[1,5] + 48.84 y[1,6] + 49.09 y[2,0]
+   + 35.85 y[2,1] + 43.93 y[2,3] + 51.62 y[2,4] + 25.63 y[2,5]
+   + 19.24 y[2,6] + 50.7 y[2,7] + 18.11 y[3,0] + 43.93 y[3,2]
+   + 38.48 y[3,4] + 19 y[3,5] + 52.61 y[3,6] + 28.28 y[3,7] + 22.02 y[4,0]
+   + 51.62 y[4,2] + 38.48 y[4,3] + 35.13 y[4,5] + 45 y[4,6] + 24.76 y[5,0]
+   + 58 y[5,1] + 25.63 y[5,2] + 19 y[5,3] + 35.13 y[5,4] + 33.96 y[5,6]
+   + 36.24 y[5,7] + 50.99 y[6,0] + 48.84 y[6,1] + 19.24 y[6,2]
+   + 52.61 y[6,3] + 45 y[6,4] + 33.96 y[6,5] + 46.39 y[7,0] + 66.1 y[7,1]
+   + 50.7 y[7,2] + 28.28 y[7,3] + 66.1 y[7,4] + 36.24 y[7,5] + 0.59 x[0,2]
+   + 0.6 x[0,3] + 0.23 x[0,4] + 0.35 x[0,5] + 1.03 x[0,6] + 1.11 x[0,7]
+   + 0.95 x[1,2] + 3.29 x[1,5] + 1.71 x[1,6] + 3.02 x[2,0] + 2.29 x[2,1]
+   + 2.8 x[2,3] + 3.45 x[2,4] + 1.14 x[2,5] + 0.97 x[2,6] + 3.19 x[2,7]
+   + 0.77 x[3,0] + 0.81 x[3,2] + 1.59 x[3,4] + 0.79 x[3,5] + 1.09 x[3,6]
+   + 0.44 x[3,7] + 0.46 x[4,0] + 2.68 x[4,2] + 2.26 x[4,3] + 1.74 x[4,5]
+   + 1.6 x[4,6] + 0.29 x[5,0] + 0.59 x[5,1] + 1.26 x[5,2] + 0.79 x[5,3]
+   + 1.31 x[5,4] + 0.69 x[5,6] + 0.63 x[5,7] + 1.06 x[6,0] + 0.87 x[6,1]
+   + 0.88 x[6,2] + 1.5 x[6,3] + 1.95 x[6,4] + 1.21 x[6,5] + 1.99 x[7,0]
+   + 3.61 x[7,1] + 2.88 x[7,2] + 0.54 x[7,3] + 4.47 x[7,4] + 2.22 x[7,5]
+   + 4.909 r[0,2] + 1.811 r[0,3] + 2.202 r[0,4] + 2.476 r[0,5]
+   + 5.099 r[0,6] + 4.639 r[0,7] + 3.585 r[1,2] + 5.8 r[1,5] + 4.884 r[1,6]
+   + 4.909 r[2,0] + 3.585 r[2,1] + 4.393 r[2,3] + 5.162 r[2,4]
+   + 2.563 r[2,5] + 1.924 r[2,6] + 5.07 r[2,7] + 1.811 r[3,0]
+   + 4.393 r[3,2] + 3.848 r[3,4] + 1.9 r[3,5] + 5.261 r[3,6] + 2.828 r[3,7]
+   + 2.202 r[4,0] + 5.162 r[4,2] + 3.848 r[4,3] + 3.513 r[4,5] + 4.5 r[4,6]
+   + 2.476 r[5,0] + 5.8 r[5,1] + 2.563 r[5,2] + 1.9 r[5,3] + 3.513 r[5,4]
+   + 3.396 r[5,6] + 3.624 r[5,7] + 5.099 r[6,0] + 4.884 r[6,1]
+   + 1.924 r[6,2] + 5.261 r[6,3] + 4.5 r[6,4] + 3.396 r[6,5] + 4.639 r[7,0]
+   + 6.61 r[7,1] + 5.07 r[7,2] + 2.828 r[7,3] + 6.61 r[7,4] + 3.624 r[7,5]
+Subject To
+ flow_cons_inner_nodes[0]: - y[0,2] - y[0,3] - y[0,4] - y[0,5] - y[0,6]
+   - y[0,7] + y[2,0] + y[3,0] + y[4,0] + y[5,0] + y[6,0] + y[7,0] = 0
+ flow_cons_inner_nodes[2]: y[0,2] + y[1,2] - y[2,0] - y[2,1] - y[2,3]
+   - y[2,4] - y[2,5] - y[2,6] - y[2,7] + y[3,2] + y[4,2] + y[5,2] + y[6,2]
+   + y[7,2] = 0
+ flow_cons_inner_nodes[3]: y[0,3] + y[2,3] - y[3,0] - y[3,2] - y[3,4]
+   - y[3,5] - y[3,6] - y[3,7] + y[4,3] + y[5,3] + y[6,3] + y[7,3] = 0
+ flow_cons_inner_nodes[5]: y[0,5] + y[1,5] + y[2,5] + y[3,5] + y[4,5]
+   - y[5,0] - y[5,1] - y[5,2] - y[5,3] - y[5,4] - y[5,6] - y[5,7] + y[6,5]
+   + y[7,5] = 0
+ flow_cons_inner_nodes[6]: y[0,6] + y[1,6] + y[2,6] + y[3,6] + y[4,6]
+   + y[5,6] - y[6,0] - y[6,1] - y[6,2] - y[6,3] - y[6,4] - y[6,5] = 0
+ flow_cons_inner_nodes[7]: y[0,7] + y[2,7] + y[3,7] + y[5,7] - y[7,0]
+   - y[7,1] - y[7,2] - y[7,3] - y[7,4] - y[7,5] = 0
+ flow_cons_source: y[1,2] + y[1,5] + y[1,6] - y[2,1] - y[5,1] - y[6,1]
+   - y[7,1] = 1
+ flow_cons_target: y[0,4] + y[2,4] + y[3,4] - y[4,0] - y[4,2] - y[4,3]
+   - y[4,5] - y[4,6] + y[5,4] + y[6,4] + y[7,4] = 1
+ primal_lower_interdiction[0,2]: x[0,2] + u[0,2] <= 1
+ primal_lower_interdiction[0,3]: x[0,3] + u[0,3] <= 1
+ primal_lower_interdiction[0,4]: x[0,4] + u[0,4] <= 1
+ primal_lower_interdiction[0,5]: x[0,5] + u[0,5] <= 1
+ primal_lower_interdiction[0,6]: x[0,6] + u[0,6] <= 1
+ primal_lower_interdiction[0,7]: x[0,7] + u[0,7] <= 1
+ primal_lower_interdiction[1,2]: x[1,2] + u[1,2] <= 1
+ primal_lower_interdiction[1,5]: x[1,5] + u[1,5] <= 1
+ primal_lower_interdiction[1,6]: x[1,6] + u[1,6] <= 1
+ primal_lower_interdiction[2,0]: x[2,0] + u[2,0] <= 1
+ primal_lower_interdiction[2,1]: x[2,1] + u[2,1] <= 1
+ primal_lower_interdiction[2,3]: x[2,3] + u[2,3] <= 1
+ primal_lower_interdiction[2,4]: x[2,4] + u[2,4] <= 1
+ primal_lower_interdiction[2,5]: x[2,5] + u[2,5] <= 1
+ primal_lower_interdiction[2,6]: x[2,6] + u[2,6] <= 1
+ primal_lower_interdiction[2,7]: x[2,7] + u[2,7] <= 1
+ primal_lower_interdiction[3,0]: x[3,0] + u[3,0] <= 1
+ primal_lower_interdiction[3,2]: x[3,2] + u[3,2] <= 1
+ primal_lower_interdiction[3,4]: x[3,4] + u[3,4] <= 1
+ primal_lower_interdiction[3,5]: x[3,5] + u[3,5] <= 1
+ primal_lower_interdiction[3,6]: x[3,6] + u[3,6] <= 1
+ primal_lower_interdiction[3,7]: x[3,7] + u[3,7] <= 1
+ primal_lower_interdiction[4,0]: x[4,0] + u[4,0] <= 1
+ primal_lower_interdiction[4,2]: x[4,2] + u[4,2] <= 1
+ primal_lower_interdiction[4,3]: x[4,3] + u[4,3] <= 1
+ primal_lower_interdiction[4,5]: x[4,5] + u[4,5] <= 1
+ primal_lower_interdiction[4,6]: x[4,6] + u[4,6] <= 1
+ primal_lower_interdiction[5,0]: x[5,0] + u[5,0] <= 1
+ primal_lower_interdiction[5,1]: x[5,1] + u[5,1] <= 1
+ primal_lower_interdiction[5,2]: x[5,2] + u[5,2] <= 1
+ primal_lower_interdiction[5,3]: x[5,3] + u[5,3] <= 1
+ primal_lower_interdiction[5,4]: x[5,4] + u[5,4] <= 1
+ primal_lower_interdiction[5,6]: x[5,6] + u[5,6] <= 1
+ primal_lower_interdiction[5,7]: x[5,7] + u[5,7] <= 1
+ primal_lower_interdiction[6,0]: x[6,0] + u[6,0] <= 1
+ primal_lower_interdiction[6,1]: x[6,1] + u[6,1] <= 1
+ primal_lower_interdiction[6,2]: x[6,2] + u[6,2] <= 1
+ primal_lower_interdiction[6,3]: x[6,3] + u[6,3] <= 1
+ primal_lower_interdiction[6,4]: x[6,4] + u[6,4] <= 1
+ primal_lower_interdiction[6,5]: x[6,5] + u[6,5] <= 1
+ primal_lower_interdiction[7,0]: x[7,0] + u[7,0] <= 1
+ primal_lower_interdiction[7,1]: x[7,1] + u[7,1] <= 1
+ primal_lower_interdiction[7,2]: x[7,2] + u[7,2] <= 1
+ primal_lower_interdiction[7,3]: x[7,3] + u[7,3] <= 1
+ primal_lower_interdiction[7,4]: x[7,4] + u[7,4] <= 1
+ primal_lower_interdiction[7,5]: x[7,5] + u[7,5] <= 1
+ primal_lower_budget: u[0,2] + u[0,3] + u[0,4] + u[0,5] + u[0,6] + u[0,7]
+   + u[1,2] + u[1,5] + u[1,6] + u[2,0] + u[2,1] + u[2,3] + u[2,4] + u[2,5]
+   + u[2,6] + u[2,7] + u[3,0] + u[3,2] + u[3,4] + u[3,5] + u[3,6] + u[3,7]
+   + u[4,0] + u[4,2] + u[4,3] + u[4,5] + u[4,6] + u[5,0] + u[5,1] + u[5,2]
+   + u[5,3] + u[5,4] + u[5,6] + u[5,7] + u[6,0] + u[6,1] + u[6,2] + u[6,3]
+   + u[6,4] + u[6,5] + u[7,0] + u[7,1] + u[7,2] + u[7,3] + u[7,4] + u[7,5]
+   <= 2
+ mccormick1[0,2]: - u[0,2] + r[0,2] <= 0
+ mccormick1[0,3]: - u[0,3] + r[0,3] <= 0
+ mccormick1[0,4]: - u[0,4] + r[0,4] <= 0
+ mccormick1[0,5]: - u[0,5] + r[0,5] <= 0
+ mccormick1[0,6]: - u[0,6] + r[0,6] <= 0
+ mccormick1[0,7]: - u[0,7] + r[0,7] <= 0
+ mccormick1[1,2]: - u[1,2] + r[1,2] <= 0
+ mccormick1[1,5]: - u[1,5] + r[1,5] <= 0
+ mccormick1[1,6]: - u[1,6] + r[1,6] <= 0
+ mccormick1[2,0]: - u[2,0] + r[2,0] <= 0
+ mccormick1[2,1]: - u[2,1] + r[2,1] <= 0
+ mccormick1[2,3]: - u[2,3] + r[2,3] <= 0
+ mccormick1[2,4]: - u[2,4] + r[2,4] <= 0
+ mccormick1[2,5]: - u[2,5] + r[2,5] <= 0
+ mccormick1[2,6]: - u[2,6] + r[2,6] <= 0
+ mccormick1[2,7]: - u[2,7] + r[2,7] <= 0
+ mccormick1[3,0]: - u[3,0] + r[3,0] <= 0
+ mccormick1[3,2]: - u[3,2] + r[3,2] <= 0
+ mccormick1[3,4]: - u[3,4] + r[3,4] <= 0
+ mccormick1[3,5]: - u[3,5] + r[3,5] <= 0
+ mccormick1[3,6]: - u[3,6] + r[3,6] <= 0
+ mccormick1[3,7]: - u[3,7] + r[3,7] <= 0
+ mccormick1[4,0]: - u[4,0] + r[4,0] <= 0
+ mccormick1[4,2]: - u[4,2] + r[4,2] <= 0
+ mccormick1[4,3]: - u[4,3] + r[4,3] <= 0
+ mccormick1[4,5]: - u[4,5] + r[4,5] <= 0
+ mccormick1[4,6]: - u[4,6] + r[4,6] <= 0
+ mccormick1[5,0]: - u[5,0] + r[5,0] <= 0
+ mccormick1[5,1]: - u[5,1] + r[5,1] <= 0
+ mccormick1[5,2]: - u[5,2] + r[5,2] <= 0
+ mccormick1[5,3]: - u[5,3] + r[5,3] <= 0
+ mccormick1[5,4]: - u[5,4] + r[5,4] <= 0
+ mccormick1[5,6]: - u[5,6] + r[5,6] <= 0
+ mccormick1[5,7]: - u[5,7] + r[5,7] <= 0
+ mccormick1[6,0]: - u[6,0] + r[6,0] <= 0
+ mccormick1[6,1]: - u[6,1] + r[6,1] <= 0
+ mccormick1[6,2]: - u[6,2] + r[6,2] <= 0
+ mccormick1[6,3]: - u[6,3] + r[6,3] <= 0
+ mccormick1[6,4]: - u[6,4] + r[6,4] <= 0
+ mccormick1[6,5]: - u[6,5] + r[6,5] <= 0
+ mccormick1[7,0]: - u[7,0] + r[7,0] <= 0
+ mccormick1[7,1]: - u[7,1] + r[7,1] <= 0
+ mccormick1[7,2]: - u[7,2] + r[7,2] <= 0
+ mccormick1[7,3]: - u[7,3] + r[7,3] <= 0
+ mccormick1[7,4]: - u[7,4] + r[7,4] <= 0
+ mccormick1[7,5]: - u[7,5] + r[7,5] <= 0
+ mccormick2[0,2]: - y[0,2] + r[0,2] <= 0
+ mccormick2[0,3]: - y[0,3] + r[0,3] <= 0
+ mccormick2[0,4]: - y[0,4] + r[0,4] <= 0
+ mccormick2[0,5]: - y[0,5] + r[0,5] <= 0
+ mccormick2[0,6]: - y[0,6] + r[0,6] <= 0
+ mccormick2[0,7]: - y[0,7] + r[0,7] <= 0
+ mccormick2[1,2]: - y[1,2] + r[1,2] <= 0
+ mccormick2[1,5]: - y[1,5] + r[1,5] <= 0
+ mccormick2[1,6]: - y[1,6] + r[1,6] <= 0
+ mccormick2[2,0]: - y[2,0] + r[2,0] <= 0
+ mccormick2[2,1]: - y[2,1] + r[2,1] <= 0
+ mccormick2[2,3]: - y[2,3] + r[2,3] <= 0
+ mccormick2[2,4]: - y[2,4] + r[2,4] <= 0
+ mccormick2[2,5]: - y[2,5] + r[2,5] <= 0
+ mccormick2[2,6]: - y[2,6] + r[2,6] <= 0
+ mccormick2[2,7]: - y[2,7] + r[2,7] <= 0
+ mccormick2[3,0]: - y[3,0] + r[3,0] <= 0
+ mccormick2[3,2]: - y[3,2] + r[3,2] <= 0
+ mccormick2[3,4]: - y[3,4] + r[3,4] <= 0
+ mccormick2[3,5]: - y[3,5] + r[3,5] <= 0
+ mccormick2[3,6]: - y[3,6] + r[3,6] <= 0
+ mccormick2[3,7]: - y[3,7] + r[3,7] <= 0
+ mccormick2[4,0]: - y[4,0] + r[4,0] <= 0
+ mccormick2[4,2]: - y[4,2] + r[4,2] <= 0
+ mccormick2[4,3]: - y[4,3] + r[4,3] <= 0
+ mccormick2[4,5]: - y[4,5] + r[4,5] <= 0
+ mccormick2[4,6]: - y[4,6] + r[4,6] <= 0
+ mccormick2[5,0]: - y[5,0] + r[5,0] <= 0
+ mccormick2[5,1]: - y[5,1] + r[5,1] <= 0
+ mccormick2[5,2]: - y[5,2] + r[5,2] <= 0
+ mccormick2[5,3]: - y[5,3] + r[5,3] <= 0
+ mccormick2[5,4]: - y[5,4] + r[5,4] <= 0
+ mccormick2[5,6]: - y[5,6] + r[5,6] <= 0
+ mccormick2[5,7]: - y[5,7] + r[5,7] <= 0
+ mccormick2[6,0]: - y[6,0] + r[6,0] <= 0
+ mccormick2[6,1]: - y[6,1] + r[6,1] <= 0
+ mccormick2[6,2]: - y[6,2] + r[6,2] <= 0
+ mccormick2[6,3]: - y[6,3] + r[6,3] <= 0
+ mccormick2[6,4]: - y[6,4] + r[6,4] <= 0
+ mccormick2[6,5]: - y[6,5] + r[6,5] <= 0
+ mccormick2[7,0]: - y[7,0] + r[7,0] <= 0
+ mccormick2[7,1]: - y[7,1] + r[7,1] <= 0
+ mccormick2[7,2]: - y[7,2] + r[7,2] <= 0
+ mccormick2[7,3]: - y[7,3] + r[7,3] <= 0
+ mccormick2[7,4]: - y[7,4] + r[7,4] <= 0
+ mccormick2[7,5]: - y[7,5] + r[7,5] <= 0
+ mccormick3[0,2]: - y[0,2] - u[0,2] + r[0,2] >= -1
+ mccormick3[0,3]: - y[0,3] - u[0,3] + r[0,3] >= -1
+ mccormick3[0,4]: - y[0,4] - u[0,4] + r[0,4] >= -1
+ mccormick3[0,5]: - y[0,5] - u[0,5] + r[0,5] >= -1
+ mccormick3[0,6]: - y[0,6] - u[0,6] + r[0,6] >= -1
+ mccormick3[0,7]: - y[0,7] - u[0,7] + r[0,7] >= -1
+ mccormick3[1,2]: - y[1,2] - u[1,2] + r[1,2] >= -1
+ mccormick3[1,5]: - y[1,5] - u[1,5] + r[1,5] >= -1
+ mccormick3[1,6]: - y[1,6] - u[1,6] + r[1,6] >= -1
+ mccormick3[2,0]: - y[2,0] - u[2,0] + r[2,0] >= -1
+ mccormick3[2,1]: - y[2,1] - u[2,1] + r[2,1] >= -1
+ mccormick3[2,3]: - y[2,3] - u[2,3] + r[2,3] >= -1
+ mccormick3[2,4]: - y[2,4] - u[2,4] + r[2,4] >= -1
+ mccormick3[2,5]: - y[2,5] - u[2,5] + r[2,5] >= -1
+ mccormick3[2,6]: - y[2,6] - u[2,6] + r[2,6] >= -1
+ mccormick3[2,7]: - y[2,7] - u[2,7] + r[2,7] >= -1
+ mccormick3[3,0]: - y[3,0] - u[3,0] + r[3,0] >= -1
+ mccormick3[3,2]: - y[3,2] - u[3,2] + r[3,2] >= -1
+ mccormick3[3,4]: - y[3,4] - u[3,4] + r[3,4] >= -1
+ mccormick3[3,5]: - y[3,5] - u[3,5] + r[3,5] >= -1
+ mccormick3[3,6]: - y[3,6] - u[3,6] + r[3,6] >= -1
+ mccormick3[3,7]: - y[3,7] - u[3,7] + r[3,7] >= -1
+ mccormick3[4,0]: - y[4,0] - u[4,0] + r[4,0] >= -1
+ mccormick3[4,2]: - y[4,2] - u[4,2] + r[4,2] >= -1
+ mccormick3[4,3]: - y[4,3] - u[4,3] + r[4,3] >= -1
+ mccormick3[4,5]: - y[4,5] - u[4,5] + r[4,5] >= -1
+ mccormick3[4,6]: - y[4,6] - u[4,6] + r[4,6] >= -1
+ mccormick3[5,0]: - y[5,0] - u[5,0] + r[5,0] >= -1
+ mccormick3[5,1]: - y[5,1] - u[5,1] + r[5,1] >= -1
+ mccormick3[5,2]: - y[5,2] - u[5,2] + r[5,2] >= -1
+ mccormick3[5,3]: - y[5,3] - u[5,3] + r[5,3] >= -1
+ mccormick3[5,4]: - y[5,4] - u[5,4] + r[5,4] >= -1
+ mccormick3[5,6]: - y[5,6] - u[5,6] + r[5,6] >= -1
+ mccormick3[5,7]: - y[5,7] - u[5,7] + r[5,7] >= -1
+ mccormick3[6,0]: - y[6,0] - u[6,0] + r[6,0] >= -1
+ mccormick3[6,1]: - y[6,1] - u[6,1] + r[6,1] >= -1
+ mccormick3[6,2]: - y[6,2] - u[6,2] + r[6,2] >= -1
+ mccormick3[6,3]: - y[6,3] - u[6,3] + r[6,3] >= -1
+ mccormick3[6,4]: - y[6,4] - u[6,4] + r[6,4] >= -1
+ mccormick3[6,5]: - y[6,5] - u[6,5] + r[6,5] >= -1
+ mccormick3[7,0]: - y[7,0] - u[7,0] + r[7,0] >= -1
+ mccormick3[7,1]: - y[7,1] - u[7,1] + r[7,1] >= -1
+ mccormick3[7,2]: - y[7,2] - u[7,2] + r[7,2] >= -1
+ mccormick3[7,3]: - y[7,3] - u[7,3] + r[7,3] >= -1
+ mccormick3[7,4]: - y[7,4] - u[7,4] + r[7,4] >= -1
+ mccormick3[7,5]: - y[7,5] - u[7,5] + r[7,5] >= -1
+Bounds
+Binaries
+ y[0,2] y[0,3] y[0,4] y[0,5] y[0,6] y[0,7] y[1,2] y[1,5] y[1,6] y[2,0]
+ y[2,1] y[2,3] y[2,4] y[2,5] y[2,6] y[2,7] y[3,0] y[3,2] y[3,4] y[3,5]
+ y[3,6] y[3,7] y[4,0] y[4,2] y[4,3] y[4,5] y[4,6] y[5,0] y[5,1] y[5,2]
+ y[5,3] y[5,4] y[5,6] y[5,7] y[6,0] y[6,1] y[6,2] y[6,3] y[6,4] y[6,5]
+ y[7,0] y[7,1] y[7,2] y[7,3] y[7,4] y[7,5] x[0,2] x[0,3] x[0,4] x[0,5]
+ x[0,6] x[0,7] x[1,2] x[1,5] x[1,6] x[2,0] x[2,1] x[2,3] x[2,4] x[2,5]
+ x[2,6] x[2,7] x[3,0] x[3,2] x[3,4] x[3,5] x[3,6] x[3,7] x[4,0] x[4,2]
+ x[4,3] x[4,5] x[4,6] x[5,0] x[5,1] x[5,2] x[5,3] x[5,4] x[5,6] x[5,7]
+ x[6,0] x[6,1] x[6,2] x[6,3] x[6,4] x[6,5] x[7,0] x[7,1] x[7,2] x[7,3]
+ x[7,4] x[7,5] u[0,2] u[0,3] u[0,4] u[0,5] u[0,6] u[0,7] u[1,2] u[1,5]
+ u[1,6] u[2,0] u[2,1] u[2,3] u[2,4] u[2,5] u[2,6] u[2,7] u[3,0] u[3,2]
+ u[3,4] u[3,5] u[3,6] u[3,7] u[4,0] u[4,2] u[4,3] u[4,5] u[4,6] u[5,0]
+ u[5,1] u[5,2] u[5,3] u[5,4] u[5,6] u[5,7] u[6,0] u[6,1] u[6,2] u[6,3]
+ u[6,4] u[6,5] u[7,0] u[7,1] u[7,2] u[7,3] u[7,4] u[7,5] r[0,2] r[0,3]
+ r[0,4] r[0,5] r[0,6] r[0,7] r[1,2] r[1,5] r[1,6] r[2,0] r[2,1] r[2,3]
+ r[2,4] r[2,5] r[2,6] r[2,7] r[3,0] r[3,2] r[3,4] r[3,5] r[3,6] r[3,7]
+ r[4,0] r[4,2] r[4,3] r[4,5] r[4,6] r[5,0] r[5,1] r[5,2] r[5,3] r[5,4]
+ r[5,6] r[5,7] r[6,0] r[6,1] r[6,2] r[6,3] r[6,4] r[6,5] r[7,0] r[7,1]
+ r[7,2] r[7,3] r[7,4] r[7,5]
+End

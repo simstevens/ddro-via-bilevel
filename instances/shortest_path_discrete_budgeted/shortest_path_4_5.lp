@@ -1,0 +1,67 @@
+\ Model sp_4_5
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+\ Signature: 0x3490b6fbd1385a1b
+Minimize
+  62.8 y[0,1] + 24.08 y[0,3] + 62.8 y[1,0] + 4.24 y[1,2] + 39.85 y[1,3]
+   + 4.24 y[2,1] + 43.66 y[2,3] + 24.08 y[3,0] + 39.85 y[3,1]
+   + 43.66 y[3,2] + 2.56 x[0,1] + 0.81 x[0,3] + 0.78 x[1,0] + 0.15 x[1,2]
+   + 0.46 x[1,3] + 0.07 x[2,1] + 1.13 x[2,3] + 1.64 x[3,0] + 1.55 x[3,1]
+   + 1.87 x[3,2] + 6.28 r[0,1] + 2.408 r[0,3] + 6.28 r[1,0] + 0.424 r[1,2]
+   + 3.985 r[1,3] + 0.424 r[2,1] + 4.366 r[2,3] + 2.408 r[3,0]
+   + 3.985 r[3,1] + 4.366 r[3,2]
+Subject To
+ flow_cons_inner_nodes[1]: y[0,1] - y[1,0] - y[1,2] - y[1,3] + y[2,1]
+   + y[3,1] = 0
+ flow_cons_inner_nodes[3]: y[0,3] + y[1,3] + y[2,3] - y[3,0] - y[3,1]
+   - y[3,2] = 0
+ flow_cons_source: y[0,1] + y[0,3] - y[1,0] - y[3,0] = 1
+ flow_cons_target: y[1,2] - y[2,1] - y[2,3] + y[3,2] = 1
+ primal_lower_interdiction[0,1]: x[0,1] + u[0,1] <= 1
+ primal_lower_interdiction[0,3]: x[0,3] + u[0,3] <= 1
+ primal_lower_interdiction[1,0]: x[1,0] + u[1,0] <= 1
+ primal_lower_interdiction[1,2]: x[1,2] + u[1,2] <= 1
+ primal_lower_interdiction[1,3]: x[1,3] + u[1,3] <= 1
+ primal_lower_interdiction[2,1]: x[2,1] + u[2,1] <= 1
+ primal_lower_interdiction[2,3]: x[2,3] + u[2,3] <= 1
+ primal_lower_interdiction[3,0]: x[3,0] + u[3,0] <= 1
+ primal_lower_interdiction[3,1]: x[3,1] + u[3,1] <= 1
+ primal_lower_interdiction[3,2]: x[3,2] + u[3,2] <= 1
+ primal_lower_budget: u[0,1] + u[0,3] + u[1,0] + u[1,2] + u[1,3] + u[2,1]
+   + u[2,3] + u[3,0] + u[3,1] + u[3,2] <= 2
+ mccormick1[0,1]: - u[0,1] + r[0,1] <= 0
+ mccormick1[0,3]: - u[0,3] + r[0,3] <= 0
+ mccormick1[1,0]: - u[1,0] + r[1,0] <= 0
+ mccormick1[1,2]: - u[1,2] + r[1,2] <= 0
+ mccormick1[1,3]: - u[1,3] + r[1,3] <= 0
+ mccormick1[2,1]: - u[2,1] + r[2,1] <= 0
+ mccormick1[2,3]: - u[2,3] + r[2,3] <= 0
+ mccormick1[3,0]: - u[3,0] + r[3,0] <= 0
+ mccormick1[3,1]: - u[3,1] + r[3,1] <= 0
+ mccormick1[3,2]: - u[3,2] + r[3,2] <= 0
+ mccormick2[0,1]: - y[0,1] + r[0,1] <= 0
+ mccormick2[0,3]: - y[0,3] + r[0,3] <= 0
+ mccormick2[1,0]: - y[1,0] + r[1,0] <= 0
+ mccormick2[1,2]: - y[1,2] + r[1,2] <= 0
+ mccormick2[1,3]: - y[1,3] + r[1,3] <= 0
+ mccormick2[2,1]: - y[2,1] + r[2,1] <= 0
+ mccormick2[2,3]: - y[2,3] + r[2,3] <= 0
+ mccormick2[3,0]: - y[3,0] + r[3,0] <= 0
+ mccormick2[3,1]: - y[3,1] + r[3,1] <= 0
+ mccormick2[3,2]: - y[3,2] + r[3,2] <= 0
+ mccormick3[0,1]: - y[0,1] - u[0,1] + r[0,1] >= -1
+ mccormick3[0,3]: - y[0,3] - u[0,3] + r[0,3] >= -1
+ mccormick3[1,0]: - y[1,0] - u[1,0] + r[1,0] >= -1
+ mccormick3[1,2]: - y[1,2] - u[1,2] + r[1,2] >= -1
+ mccormick3[1,3]: - y[1,3] - u[1,3] + r[1,3] >= -1
+ mccormick3[2,1]: - y[2,1] - u[2,1] + r[2,1] >= -1
+ mccormick3[2,3]: - y[2,3] - u[2,3] + r[2,3] >= -1
+ mccormick3[3,0]: - y[3,0] - u[3,0] + r[3,0] >= -1
+ mccormick3[3,1]: - y[3,1] - u[3,1] + r[3,1] >= -1
+ mccormick3[3,2]: - y[3,2] - u[3,2] + r[3,2] >= -1
+Bounds
+Binaries
+ y[0,1] y[0,3] y[1,0] y[1,2] y[1,3] y[2,1] y[2,3] y[3,0] y[3,1] y[3,2]
+ x[0,1] x[0,3] x[1,0] x[1,2] x[1,3] x[2,1] x[2,3] x[3,0] x[3,1] x[3,2]
+ u[0,1] u[0,3] u[1,0] u[1,2] u[1,3] u[2,1] u[2,3] u[3,0] u[3,1] u[3,2]
+ r[0,1] r[0,3] r[1,0] r[1,2] r[1,3] r[2,1] r[2,3] r[3,0] r[3,1] r[3,2]
+End

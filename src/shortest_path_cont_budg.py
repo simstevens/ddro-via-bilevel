@@ -13,9 +13,10 @@
 import gurobipy as gp
 from gurobipy import GRB
 import networkx as nx
+import random
 
 
-def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, c=1.0, gam=0.2):
+def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name, Gamma=2, c=None, gam=0.2):
     """ Solves the shortest path problem with budgeted uncertainty with the Bilevel Reformulation
 
     Parameters
@@ -51,22 +52,23 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, 
     # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
+    m.setParam('MIPGap', 1e-6)
 
     # define McCormick bigMs
     M_lam = dict(cost_dev)
     M_u = 1
 
     # create variables
-    y = m.addVars(arc, vtype = GRB.BINARY, name = "flow")
-    x = m.addVars(arc, vtype = GRB.BINARY, name = "unc_reduction")
-    u = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "uncertainty")
+    y = m.addVars(arc, vtype = GRB.BINARY, name = "y")
+    x = m.addVars(arc, vtype = GRB.BINARY, name = "x")
+    u = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "u")
     pi = m.addVar(vtype = GRB.CONTINUOUS, lb = 0, name = "pi")
     lam = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, name = "lambda")
     r = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, name = "r") # x*lambda
     w = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, name = "w") # u*y
 
     # set objective
-    obj = gp.quicksum(nom_cost[a] * y[a] for a in arc) + gp.quicksum(c * x[a] for a in arc) + gp.quicksum(w[a] * cost_dev[a] for a in arc)
+    obj = gp.quicksum(nom_cost[a] * y[a] for a in arc) + gp.quicksum(c[a] * x[a] for a in arc) + gp.quicksum(w[a] * cost_dev[a] for a in arc)
     m.setObjective(obj, GRB.MINIMIZE)
 
     # primal upper level
@@ -97,8 +99,16 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, 
     # optimize model
     print("\n######################################\n")
     m.optimize()
+    result = m.getVars()
+    for var in result:
+        if "x" in var.VarName or "y" in var.VarName:
+            if var.X > 0.001:
+                print(var.VarName, var.X)
+    print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
+             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
+    
 
-def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, c=1.0, gam=0.2):
+def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name, Gamma=2, c=None, gam=0.2):
     """ Solves the shortest path problem with budgeted uncertainty with the Robust Reformulation
 
     Parameters
@@ -134,19 +144,20 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, c
     # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
+    m.setParam('MIPGap', 1e-6)
 
     # define McCormick bigMs
     M_lam = dict(cost_dev)
 
     # create variables
-    y = m.addVars(arc, vtype = GRB.BINARY, name = "flow")
-    x = m.addVars(arc, vtype = GRB.BINARY, name = "unc_reduction")
+    y = m.addVars(arc, vtype = GRB.BINARY, name = "y")
+    x = m.addVars(arc, vtype = GRB.BINARY, name = "x")
     pi = m.addVar(vtype = GRB.CONTINUOUS, lb = 0, name = "pi")
     lam = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, name = "lambda")
     r = m.addVars(arc, vtype = GRB.CONTINUOUS, lb = 0, name = "r")
 
     # set objective
-    obj = gp.quicksum(nom_cost[a] * y[a] for a in arc) + gp.quicksum(c * x[a] for a in arc) + pi * Gamma + gp.quicksum(lam[a] - gam * r[a] for a in arc)
+    obj = gp.quicksum(nom_cost[a] * y[a] for a in arc) + gp.quicksum(c[a] * x[a] for a in arc) + pi * Gamma + gp.quicksum(lam[a] - gam * r[a] for a in arc)
     m.setObjective(obj, GRB.MINIMIZE)
 
     # primal upper level
@@ -165,22 +176,29 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, Gamma=2, c
     # optimize model
     print("\n######################################\n")
     m.optimize()
+    result = m.getVars()
+    for var in result:
+        if "x" in var.VarName or "y" in var.VarName:
+            if var.X > 0.001:
+                print(var.VarName, var.X)
+    print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
+             ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
 
 def solve_instance_bilevel(file_name):
     ''' Solves the shortest path instance with the bilevel model'''
     # parse instanc
-    arcs, nom_cost, cost_dev, source, target, nodes = parse_graph(file_name)
+    arcs, nom_cost, cost_dev, source, target, hedge_cost, nodes = parse_graph(file_name)
 
     # solve instance
-    solve_model_bilevel(nodes, arcs, nom_cost, cost_dev, source, target)
+    solve_model_bilevel(nodes, arcs, nom_cost, cost_dev, source, target, file_name, c=hedge_cost)
 
 def solve_instance_robust(file_name):
     ''' Solves the shortest path instance with the robust model'''
     # parse instance
-    arcs, nom_cost, cost_dev, source, target, nodes = parse_graph(file_name)
+    arcs, nom_cost, cost_dev, source, target, hedge_cost, nodes = parse_graph(file_name)
 
     # solve instance
-    solve_model_robust(nodes, arcs, nom_cost, cost_dev, source, target)
+    solve_model_robust(nodes, arcs, nom_cost, cost_dev, source, target, file_name, c=hedge_cost)
 
 def parse_graph(file_name, weight='weight'):
     ''' Parses a graphml file and returns the graph parameters
@@ -207,7 +225,7 @@ def parse_graph(file_name, weight='weight'):
     list(G.nodes()): list
         list of all nodes in the graph
     '''
-
+    random.seed(42)
     # read the graphml file as a networkx model
     G = nx.read_graphml(file_name)
 
@@ -222,8 +240,12 @@ def parse_graph(file_name, weight='weight'):
     # extract all nom_costs
     arcs, nom_cost = gp.multidict(arcs_dic)
     cost_dev = nom_cost
+    
+    hedge_cost = {}
+    for a in arcs:
+        hedge_cost[a] = round(random.uniform(0.1 * cost_dev[a], 0.7 * cost_dev[a]), 2)
 
-    return arcs, nom_cost, cost_dev, source, target, list(G.nodes())
+    return arcs, nom_cost, cost_dev, source, target, hedge_cost, list(G.nodes())
 
 def get_source_target(file_name):
     ''' Finds the source and target nodes in a graphml file'''
