@@ -36,11 +36,13 @@ def validate_arguments(arguments):
         raise ValueError("Invalid approach! Choose either 'robust', 'bilevel', 'mibs', or 'yasol'.")
     if arguments.yasol_type and arguments.yasol_type not in {"bilevel", "existeval", "implicit"}:
         raise ValueError("Invalid yasol type! Choose from 'bilevel', 'existeval', or 'implicit'.")
+    if arguments.hedging_cost is not None and arguments.problem_class != "shortest_path":
+        raise ValueError("Hedging cost can only be specified for the shortest path problem!")
 
 def get_instance_file(problem_class, uncertainty, instance_size, instance_id, approach, yasol_type=None):
     """get the instance file based on the parsed arguments"""
     if uncertainty == "cont_knapsack" or uncertainty == "cont_budgeted":
-        base_path = f"./instances/{problem_class}_cont/{problem_class}_{instance_size}_{instance_id}"
+        base_path = f"./instances/{problem_class}_{uncertainty}/{problem_class}_{instance_size}_{instance_id}"
     else:
         base_path = f"./instances/{problem_class}_{uncertainty}/{problem_class}_{instance_size}_{instance_id}"
     
@@ -64,7 +66,7 @@ def get_instance_file(problem_class, uncertainty, instance_size, instance_id, ap
     
     return instance_file
 
-def solve_instance(problem_class, uncertainty, approach, instance_file, mibs_directory, yasol_directory=None):
+def solve_instance(problem_class, uncertainty, approach, instance_file, mibs_directory, yasol_directory=None, hedging_cost=None):
     """solve the parsed instance"""
     
     solvers = {
@@ -84,8 +86,11 @@ def solve_instance(problem_class, uncertainty, approach, instance_file, mibs_dir
     solver = solvers.get((problem_class, uncertainty, approach))
     
     if solver:
-        solver(instance_file)
-    elif uncertainty in {"discrete_knapsack", "discrete_budgeted"} and (approach == "yasol" or approach == "mibs"):
+        if hedging_cost is None:
+            solver(instance_file)
+        else:
+            solver(instance_file, hedging_cost)
+    elif uncertainty.startswith("discrete") and (approach == "yasol" or approach == "mibs"):
         # Check if this is a yasol .qlp file
         if instance_file.endswith('.qlp') and yasol_directory:
             # Placeholder for yasol solver
@@ -109,8 +114,9 @@ if __name__ == "__main__":
     parser.add_argument('--mibs_directory', required=False, default="./dist/bin/mibs")
     parser.add_argument('--yasol_directory', required=False, help="Directory for the yasol solver")
     parser.add_argument('--yasol_type', required=False, choices=['bilevel', 'existeval', 'implicit'],
-                       help="Type of yasol .qlp file to use (bilevel, existeval, or implicit)")
+                       help="Type of yasol .qlp file to use (bilevel, existeval, or implicit)", default='bilevel')
     parser.add_argument('--instance_file', required=False, help="Direct path to the instance file (overrides other instance parameters)")
+    parser.add_argument('--hedging-cost', required=False, type=float, help="Hedging cost for bilevel problems")
     
     args = parser.parse_args()
     validate_arguments(args)
@@ -118,4 +124,4 @@ if __name__ == "__main__":
         instance_file = args.instance_file
     else:
         instance_file = get_instance_file(args.problem_class, args.uncertainty, args.instance_size, args.instance_id, args.approach, args.yasol_type)
-    solve_instance(args.problem_class, args.uncertainty, args.approach, instance_file, args.mibs_directory, args.yasol_directory)
+    solve_instance(args.problem_class, args.uncertainty, args.approach, instance_file, args.mibs_directory, args.yasol_directory, args.hedging_cost)

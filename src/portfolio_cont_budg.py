@@ -15,7 +15,7 @@ from gurobipy import GRB, QuadExpr
 import numpy as np
 import random
 
-def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=2, gam=0.2):
+def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=5, gam=0.2):
     """ Solves the portfolio problem with budgeted uncertainty with the Bilevel Reformulation
 
     Parameters
@@ -49,6 +49,8 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     m.Params.NonConvex = 2
     m.setParam('MIPGap', 1e-6)
 
+    Gamma = 0.1 * len(nom_return)
+    
     # create variables
     x = m.addVars(assets, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "x")
     y = m.addVars(assets, vtype = GRB.CONTINUOUS, lb = 0, name = "y")
@@ -87,7 +89,7 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     # optimize model
     print("\n######################################\n")
     m.optimize()
-    #m.write("bilevel_portfolio.lp")
+    m.write("bilevel_portfolio.lp")
     result = m.getVars()
     for var in result:
         if "x" in var.VarName or "y" in var.VarName or "u" in var.VarName:
@@ -96,7 +98,7 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal*100,
              ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(nom_return))
 
-def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=2, gam=0.2):
+def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_variance, k, file_name, Gamma=5, gam=0.2):
     """ Solves the portfolio problem with budgeted uncertainty with the Robust Reformulation
 
     Parameters
@@ -129,7 +131,9 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
     m.setParam('TimeLimit', 2*60*60)
     m.Params.NonConvex = 2
     m.setParam('MIPGap', 1e-6)
-
+    
+    Gamma = 0.1 * len(nom_return)
+    
     # create variables
     x = m.addVars(assets, vtype = GRB.CONTINUOUS, lb = 0, ub = 1, name = "x")
     y = m.addVars(assets, vtype = GRB.CONTINUOUS, lb = 0, name = "y")
@@ -148,7 +152,7 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
         for j in range(len(assets)):
             quad_expr.add(covariance[i, j] * y[i] * y[j])  
     m.addConstr(quad_expr <= max_variance, name="variance")
-    m.addConstr(gp.quicksum(y[i] for i in assets) == 1, name="budget")
+    m.addConstr(gp.quicksum(y[i] for i in assets) <= 1, name="budget")
 
     # dual lower level
     m.addConstrs((lam[i] + pi >= return_dev[i] * y[i] for i in assets), name="dual_lower")
@@ -159,7 +163,7 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
 
     # optimize model
     print("\n######################################\n")
-    #m.write("robust_portfolio.lp")
+    m.write("robust_portfolio.lp")
     m.optimize()
     
     result = m.getVars()
@@ -242,8 +246,7 @@ def parse_file(file_path):
     return_dev = []
     hedge_cost = []
     for asset in range(len(expected_returns)):
-        return_dev.append(random.uniform(expected_returns[asset]/2, expected_returns[asset]))
-        hedge_cost.append(random.uniform(return_dev[asset]*0.01, return_dev[asset]*0.02))
-
+        return_dev.append(expected_returns[asset] * 0.1)
+        hedge_cost.append(0.001)
 
     return seed, n, k, max_variance, expected_returns, covariance_matrix, return_dev, hedge_cost

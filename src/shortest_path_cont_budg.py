@@ -57,6 +57,8 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name
     # define McCormick bigMs
     M_lam = dict(cost_dev)
     M_u = 1
+    
+    Gamma = 0.01*len(arc)
 
     # create variables
     y = m.addVars(arc, vtype = GRB.BINARY, name = "y")
@@ -98,14 +100,22 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name
 
     # optimize model
     print("\n######################################\n")
+    m.write("shortest_path_bilevel.lp")
     m.optimize()
     result = m.getVars()
+    hedge_decisions = 0
+    arc_decisions = 0
     for var in result:
         if "x" in var.VarName or "y" in var.VarName:
             if var.X > 0.001:
                 print(var.VarName, var.X)
+                if "x" in var.VarName:
+                    hedge_decisions += 1
+                if "y" in var.VarName:
+                    arc_decisions += 1
     print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
              ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
+    print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", bilevel ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, ",", arc_decisions)
     
 
 def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name, Gamma=2, c=None, gam=0.2):
@@ -148,6 +158,8 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
 
     # define McCormick bigMs
     M_lam = dict(cost_dev)
+    
+    Gamma = 0.01*len(arc)
 
     # create variables
     y = m.addVars(arc, vtype = GRB.BINARY, name = "y")
@@ -166,7 +178,7 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
     m.addConstr((y.sum("*", target) - y.sum(target, "*") == 1), name = "target")
 
     # dual lower level
-    m.addConstrs(pi + lam[a] - (cost_dev[a] * y[a]) >= 0 for a in arc)
+    m.addConstrs((pi + lam[a] - (cost_dev[a] * y[a]) >= 0 for a in arc), name="dual_lower")
 
     # McCormick
     m.addConstrs(r[a] - M_lam[a] * x[a] <= 0 for a in arc)
@@ -175,27 +187,41 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
 
     # optimize model
     print("\n######################################\n")
+    m.write("shortest_path_robust.lp")
     m.optimize()
     result = m.getVars()
+    hedge_decisions = 0
+    arc_decisions = 0
     for var in result:
         if "x" in var.VarName or "y" in var.VarName:
             if var.X > 0.001:
                 print(var.VarName, var.X)
+                if "x" in var.VarName:
+                    hedge_decisions += 1
+                if "y" in var.VarName:
+                    arc_decisions += 1
     print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
              ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
+    print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", robust ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, "," ,arc_decisions)
 
-def solve_instance_bilevel(file_name):
+def solve_instance_bilevel(file_name, hedging_cost):
     ''' Solves the shortest path instance with the bilevel model'''
-    # parse instanc
+    # parse instance
     arcs, nom_cost, cost_dev, source, target, hedge_cost, nodes = parse_graph(file_name)
+    if hedging_cost is not None:
+        for a in arcs:
+            hedge_cost[a] = hedging_cost
 
     # solve instance
     solve_model_bilevel(nodes, arcs, nom_cost, cost_dev, source, target, file_name, c=hedge_cost)
 
-def solve_instance_robust(file_name):
+def solve_instance_robust(file_name, hedging_cost):
     ''' Solves the shortest path instance with the robust model'''
     # parse instance
     arcs, nom_cost, cost_dev, source, target, hedge_cost, nodes = parse_graph(file_name)
+    if hedging_cost is not None:
+        for a in arcs:
+            hedge_cost[a] = hedging_cost
 
     # solve instance
     solve_model_robust(nodes, arcs, nom_cost, cost_dev, source, target, file_name, c=hedge_cost)
@@ -239,11 +265,11 @@ def parse_graph(file_name, weight='weight'):
 
     # extract all nom_costs
     arcs, nom_cost = gp.multidict(arcs_dic)
-    cost_dev = nom_cost
+    cost_dev = {a: 0.5 * nom_cost[a] for a in arcs}
     
     hedge_cost = {}
     for a in arcs:
-        hedge_cost[a] = round(random.uniform(0.1 * cost_dev[a], 0.7 * cost_dev[a]), 2)
+        hedge_cost[a] = 10#round(random.uniform(0.1 * cost_dev[a], 0.7 * cost_dev[a]), 2)
 
     return arcs, nom_cost, cost_dev, source, target, hedge_cost, list(G.nodes())
 

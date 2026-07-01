@@ -36,10 +36,10 @@ The size of the instance. The following sizes are available for the different pr
 
 |                   | Shortest Path       | Knapsack                  | Portfolio           |
 |-------------------|---------------------|---------------------------|---------------------|
-| cont_budgeted     | {75, 100, ..., 300} | {1000, 2000, ..., 10 000} | {50, 100, ..., 500} |
+| cont_budgeted     | {75, 100, ..., 300} | {100, 200, ..., 1000}     | {50, 100, ..., 500} |
 | cont_knapsack     | {75, 100, ..., 300} | {1000, 2000, ..., 10 000} | {50, 100, ..., 500} |
-| discrete_budgeted |   {2, 3, ..., 11}   |     {30, 40, ..., 140}    |          -          |
-| discrete_knapsack |   {2, 3, ..., 11}   |     {30, 40, ..., 140}    |          -          |
+| discrete_budgeted |   {2, 4, ..., 20}   |     {10, 20, ..., 100}    |          -          |
+| discrete_knapsack |   {2, 4, ..., 20}   |     {30, 40, ..., 140}    |          -          |
 
 `--instance_id`
 The id of the instance. Can be chosen between 1 and 10.

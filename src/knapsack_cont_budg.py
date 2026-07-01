@@ -35,7 +35,7 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,fi
     """
 
     items = range(len(nom_weights))
-    Gamma = 0.01 * len(nom_weights)
+    Gamma = 0.1 * len(nom_weights)
 
     # create a new model
     m = gp.Model("Knapsack Bilevel")
@@ -43,7 +43,7 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,fi
     # set parameters
     m.Params.Threads = 1
     m.setParam('TimeLimit', 2*60*60)
-    #m.setParam("MIPGap", 1e-6)
+    m.setParam("MIPGap", 1e-6)
 
     # create variables
     x = m.addVars(items, vtype = GRB.BINARY, name = "x")
@@ -77,7 +77,7 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,fi
     # McCormick
     m.addConstrs((s[i] - M_lam[i] * y[i] <= 0 for i in items), name="mccormick_s_y")
     m.addConstrs((s[i] - lam[i] <= 0 for i in items), name="mccormick_s_lam")
-    m.addConstrs((lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
+    m.addConstrs((lam[i] - M_lam[i] * (1 - y[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
 
     m.addConstrs((r[i] <= u[i] for i in items), name="mccormick_r_u")
     m.addConstrs((r[i] <= M_u * x[i] for i in items), name="mccormick_r_x")
@@ -85,7 +85,7 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,fi
 
     # optimize model
     print("\n######################################\n")
-    #m.write("knapsack_bilevel.lp")
+    m.write("knapsack_bilevel.lp")
     m.optimize()
     
     result = m.getVars()
@@ -116,7 +116,7 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost,fil
     """
 
     items = range(len(nom_weights))
-    Gamma = 0.01 * len(nom_weights)
+    Gamma = 0.1 * len(nom_weights)
 
     # create a new model
     m = gp.Model("Knapsack Robust")
@@ -151,11 +151,11 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost,fil
     # McCormick
     m.addConstrs((s[i] - M_lam[i] * y[i] <= 0 for i in items), name="mccormick_s_y")
     m.addConstrs((s[i] - lam[i] <= 0 for i in items), name="mccormick_s_lam")
-    m.addConstrs((lam[i] - M_lam[i] * (1 - x[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
+    m.addConstrs((lam[i] - M_lam[i] * (1 - y[i]) - s[i] <= 0 for i in items), name="mccormick_lam_s_x")
 
     # optimize model
     print("\n######################################\n")
-    #m.write("knapsack_robust.lp")
+    m.write("knapsack_robust.lp")
     m.optimize()
     
     result = m.getVars()
@@ -212,7 +212,7 @@ def parse_knapsack(file_path):
         nom_weights.append(nom)
         weight_dev.append(dev)
         values.append(val)
-        hedge_cost.append(round(random.uniform(val*0.1, val*0.2),2))
+        hedge_cost.append(0.001)
         idx += 1
     return number_of_items, capacity, nom_weights, weight_dev, values, hedge_cost
 
