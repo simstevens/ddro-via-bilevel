@@ -16,7 +16,7 @@ import random
 import numpy as np
 
 def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,file_name, gam=0.2):
-    """ Solves the knapsack problem with budgeted uncertainties with the Bilevel Reformulation
+    """ Solves the knapsack problem with budgeted uncertainties with tnthe Bilevel Reformulation
 
     Parameters
     -------------
@@ -85,7 +85,6 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, hedge_cost,fi
 
     # optimize model
     print("\n######################################\n")
-    m.write("knapsack_bilevel.lp")
     m.optimize()
     
     result = m.getVars()
@@ -155,7 +154,6 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, hedge_cost,fil
 
     # optimize model
     print("\n######################################\n")
-    m.write("knapsack_robust.lp")
     m.optimize()
     
     result = m.getVars()

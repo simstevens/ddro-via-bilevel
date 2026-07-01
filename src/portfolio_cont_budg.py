@@ -89,7 +89,6 @@ def portfolio_bilevel(nom_return, return_dev, hedge_cost, covariance, max_varian
     # optimize model
     print("\n######################################\n")
     m.optimize()
-    m.write("bilevel_portfolio.lp")
     result = m.getVars()
     for var in result:
         if "x" in var.VarName or "y" in var.VarName or "u" in var.VarName:
@@ -163,7 +162,6 @@ def portfolio_robust(nom_return, return_dev, hedge_cost, covariance, max_varianc
 
     # optimize model
     print("\n######################################\n")
-    m.write("robust_portfolio.lp")
     m.optimize()
     
     result = m.getVars()

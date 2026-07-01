@@ -100,7 +100,6 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name
 
     # optimize model
     print("\n######################################\n")
-    m.write("shortest_path_bilevel.lp")
     m.optimize()
     result = m.getVars()
     hedge_decisions = 0
@@ -115,7 +114,7 @@ def solve_model_bilevel(vert, arc, nom_cost, cost_dev, source, target, file_name
                     arc_decisions += 1
     print("result ,", file_name.split("/")[-1], ", bilevel ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
              ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
-    print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", bilevel ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, ",", arc_decisions)
+    #print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", bilevel ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, ",", arc_decisions)
     
 
 def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name, Gamma=2, c=None, gam=0.2):
@@ -187,7 +186,6 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
 
     # optimize model
     print("\n######################################\n")
-    m.write("shortest_path_robust.lp")
     m.optimize()
     result = m.getVars()
     hedge_decisions = 0
@@ -202,7 +200,7 @@ def solve_model_robust(vert, arc, nom_cost, cost_dev, source, target, file_name,
                     arc_decisions += 1
     print("result ,", file_name.split("/")[-1], ", robust ,", m.Runtime, ",", m.Status, ",", m.ObjVal,
              ",", m.NodeCount, ",", m.IterCount, ",", m.MIPGap, ",", len(vert))
-    print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", robust ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, "," ,arc_decisions)
+    #print("hedging ,", c[arc[0]], ",", file_name.split("/")[-1], ", robust ," , m.Runtime, "," , m.Status, ",", m.ObjVal, ",", hedge_decisions, "," ,arc_decisions)
 
 def solve_instance_bilevel(file_name, hedging_cost):
     ''' Solves the shortest path instance with the bilevel model'''

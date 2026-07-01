@@ -83,7 +83,6 @@ def solve_model_bilevel(nom_weights, weight_dev, values, capacity, b, w, f, file
 
     # optimize model
     print("\n######################################\n")
-    #m.write("knapsack_bilevel.lp")
     m.optimize()
     
     result = m.getVars()
@@ -153,7 +152,6 @@ def solve_model_robust(nom_weights, weight_dev, values, capacity, b, w, f, file_
 
     # optimize model
     print("\n######################################\n")
-    #m.write("knapsack_robust.lp")
     m.optimize()
     
     result = m.getVars()
