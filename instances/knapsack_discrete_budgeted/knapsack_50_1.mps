@@ -1,4 +1,4 @@
-* Signature: 0x76745c3152afbb1c
+* Signature: 0x76745c3152b2205c
 NAME knapsack_50_1
 ROWS
  N  OBJ
@@ -406,103 +406,105 @@ COLUMNS
     x[49]     primal_upper  48
     x[49]     mccormick2[49]  -1
     x[49]     mccormick3[49]  1
-    y[0]      OBJ       0.1
+    y[0]      OBJ       0.001
     y[0]      primal_lower_interdiction[0]  1
-    y[1]      OBJ       0.07
+    y[1]      OBJ       0.001
     y[1]      primal_lower_interdiction[1]  1
-    y[2]      OBJ       0.11
+    y[2]      OBJ       0.001
     y[2]      primal_lower_interdiction[2]  1
-    y[3]      OBJ       0.13
+    y[3]      OBJ       0.001
     y[3]      primal_lower_interdiction[3]  1
-    y[4]      OBJ       0.02
+    y[4]      OBJ       0.001
     y[4]      primal_lower_interdiction[4]  1
-    y[5]      OBJ       0.02
+    y[5]      OBJ       0.001
     y[5]      primal_lower_interdiction[5]  1
-    y[6]      OBJ       0.15
+    y[6]      OBJ       0.001
     y[6]      primal_lower_interdiction[6]  1
-    y[7]      OBJ       0.08
+    y[7]      OBJ       0.001
     y[7]      primal_lower_interdiction[7]  1
-    y[8]      OBJ       0.09
+    y[8]      OBJ       0.001
     y[8]      primal_lower_interdiction[8]  1
+    y[9]      OBJ       0.001
     y[9]      primal_lower_interdiction[9]  1
-    y[10]     OBJ       0.01
+    y[10]     OBJ       0.001
     y[10]     primal_lower_interdiction[10]  1
-    y[11]     OBJ       0.07
+    y[11]     OBJ       0.001
     y[11]     primal_lower_interdiction[11]  1
-    y[12]     OBJ       0.03
+    y[12]     OBJ       0.001
     y[12]     primal_lower_interdiction[12]  1
-    y[13]     OBJ       0.11
+    y[13]     OBJ       0.001
     y[13]     primal_lower_interdiction[13]  1
-    y[14]     OBJ       0.09
+    y[14]     OBJ       0.001
     y[14]     primal_lower_interdiction[14]  1
-    y[15]     OBJ       0.11
+    y[15]     OBJ       0.001
     y[15]     primal_lower_interdiction[15]  1
-    y[16]     OBJ       0.16
+    y[16]     OBJ       0.001
     y[16]     primal_lower_interdiction[16]  1
-    y[17]     OBJ       0.14
+    y[17]     OBJ       0.001
     y[17]     primal_lower_interdiction[17]  1
-    y[18]     OBJ       0.02
+    y[18]     OBJ       0.001
     y[18]     primal_lower_interdiction[18]  1
-    y[19]     OBJ       0.05
+    y[19]     OBJ       0.001
     y[19]     primal_lower_interdiction[19]  1
-    y[20]     OBJ       0.01
+    y[20]     OBJ       0.001
     y[20]     primal_lower_interdiction[20]  1
-    y[21]     OBJ       0.11
+    y[21]     OBJ       0.001
     y[21]     primal_lower_interdiction[21]  1
+    y[22]     OBJ       0.001
     y[22]     primal_lower_interdiction[22]  1
-    y[23]     OBJ       0.05
+    y[23]     OBJ       0.001
     y[23]     primal_lower_interdiction[23]  1
-    y[24]     OBJ       0.07
+    y[24]     OBJ       0.001
     y[24]     primal_lower_interdiction[24]  1
-    y[25]     OBJ       0.08
+    y[25]     OBJ       0.001
     y[25]     primal_lower_interdiction[25]  1
-    y[26]     OBJ       0.09
+    y[26]     OBJ       0.001
     y[26]     primal_lower_interdiction[26]  1
-    y[27]     OBJ       0.03
+    y[27]     OBJ       0.001
     y[27]     primal_lower_interdiction[27]  1
-    y[28]     OBJ       0.19
+    y[28]     OBJ       0.001
     y[28]     primal_lower_interdiction[28]  1
-    y[29]     OBJ       0.13
+    y[29]     OBJ       0.001
     y[29]     primal_lower_interdiction[29]  1
-    y[30]     OBJ       0.15
+    y[30]     OBJ       0.001
     y[30]     primal_lower_interdiction[30]  1
-    y[31]     OBJ       0.12
+    y[31]     OBJ       0.001
     y[31]     primal_lower_interdiction[31]  1
-    y[32]     OBJ       0.02
+    y[32]     OBJ       0.001
     y[32]     primal_lower_interdiction[32]  1
-    y[33]     OBJ       0.04
+    y[33]     OBJ       0.001
     y[33]     primal_lower_interdiction[33]  1
-    y[34]     OBJ       0.09
+    y[34]     OBJ       0.001
     y[34]     primal_lower_interdiction[34]  1
-    y[35]     OBJ       0.02
+    y[35]     OBJ       0.001
     y[35]     primal_lower_interdiction[35]  1
-    y[36]     OBJ       0.1
+    y[36]     OBJ       0.001
     y[36]     primal_lower_interdiction[36]  1
-    y[37]     OBJ       0.14
+    y[37]     OBJ       0.001
     y[37]     primal_lower_interdiction[37]  1
-    y[38]     OBJ       0.01
+    y[38]     OBJ       0.001
     y[38]     primal_lower_interdiction[38]  1
-    y[39]     OBJ       0.12
+    y[39]     OBJ       0.001
     y[39]     primal_lower_interdiction[39]  1
-    y[40]     OBJ       0.03
+    y[40]     OBJ       0.001
     y[40]     primal_lower_interdiction[40]  1
-    y[41]     OBJ       0.07
+    y[41]     OBJ       0.001
     y[41]     primal_lower_interdiction[41]  1
-    y[42]     OBJ       0.08
+    y[42]     OBJ       0.001
     y[42]     primal_lower_interdiction[42]  1
-    y[43]     OBJ       0.14
+    y[43]     OBJ       0.001
     y[43]     primal_lower_interdiction[43]  1
-    y[44]     OBJ       0.06
+    y[44]     OBJ       0.001
     y[44]     primal_lower_interdiction[44]  1
-    y[45]     OBJ       0.14
+    y[45]     OBJ       0.001
     y[45]     primal_lower_interdiction[45]  1
-    y[46]     OBJ       0.11
+    y[46]     OBJ       0.001
     y[46]     primal_lower_interdiction[46]  1
-    y[47]     OBJ       0.13
+    y[47]     OBJ       0.001
     y[47]     primal_lower_interdiction[47]  1
-    y[48]     OBJ       0.05
+    y[48]     OBJ       0.001
     y[48]     primal_lower_interdiction[48]  1
-    y[49]     OBJ       0.03
+    y[49]     OBJ       0.001
     y[49]     primal_lower_interdiction[49]  1
     u[0]      primal_lower_interdiction[0]  1
     u[0]      primal_lower_budget  1
@@ -957,7 +959,7 @@ RHS
     RHS1      primal_lower_interdiction[47]  1
     RHS1      primal_lower_interdiction[48]  1
     RHS1      primal_lower_interdiction[49]  1
-    RHS1      primal_lower_budget  1
+    RHS1      primal_lower_budget  5
     RHS1      mccormick3[0]  1
     RHS1      mccormick3[1]  1
     RHS1      mccormick3[2]  1

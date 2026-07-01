@@ -1,0 +1,25 @@
+MINIMIZE
+104.62 y[0,1] + 104.62 y[1,0] + 52.31 r[0,1] + 52.31 r[1,0]
+SUBJECT TO
+flow_cons_source: y[0,1] - y[1,0] = 1
+flow_cons_target: y[0,1] - y[1,0] = 1
+mccormick1[0,1]: u[0,1] + y[0,1] - r[0,1] <= 1
+mccormick1[1,0]: u[1,0] + y[1,0] - r[1,0] <= 1
+UNCERTAINTY SUBJECT TO
+primal_lower: - 3.34 y[0,1] - 17.66 y[1,0] + 58.0 u[0,1] + 35.0 u[1,0] <= 58
+BOUNDS
+0 <= y[0,1] <= 1
+0 <= u[0,1] <= 1
+0 <= r[0,1] <= 1
+0 <= y[1,0] <= 1
+0 <= u[1,0] <= 1
+0 <= r[1,0] <= 1
+BINARIES
+y[0,1] y[1,0] u[0,1] u[1,0] r[0,1] r[1,0]
+EXISTS
+y[0,1] y[1,0] r[0,1] r[1,0]
+ALL
+u[0,1] u[1,0]
+ORDER
+y[0,1] y[1,0] u[0,1] u[1,0] r[0,1] r[1,0]
+END

@@ -1,0 +1,78 @@
+MINIMIZE
+- 0.56 x[0] + 0.001 y[0] - 0.16 x[1] + 0.001 y[1] - 0.78 x[2]
+   + 0.001 y[2] - 0.3 x[3] + 0.001 y[3] - 0.67 x[4] + 0.001 y[4]
+   - 0.99 x[5] + 0.001 y[5] - 0.19 x[6] + 0.001 y[6] - 0.57 x[7]
+   + 0.001 y[7] - 0.4 x[8] + 0.001 y[8] - 0.24 x[9] + 0.001 y[9]
+SUBJECT TO
+primal_upper: 3 x[0] + 0.3 u[0] + 80 x[1] + 8.0 u[1] + 78 x[2]
+   + 7.8 u[2] + 11 x[3] + 1.1 u[3] + 80 x[4] + 8.0 u[4] + 65 x[5]
+   + 6.5 u[5] + 41 x[6] + 4.1 u[6] + 39 x[7] + 3.9 u[7] + 93 x[8]
+   + 9.3 u[8] + 90 x[9] + 9.0 u[9] <= 93
+UNCERTAINTY SUBJECT TO
+primal_lower_interdiction[0]: u[0] + y[0] <= 1
+primal_lower_interdiction[1]: u[1] + y[1] <= 1
+primal_lower_interdiction[2]: u[2] + y[2] <= 1
+primal_lower_interdiction[3]: u[3] + y[3] <= 1
+primal_lower_interdiction[4]: u[4] + y[4] <= 1
+primal_lower_interdiction[5]: u[5] + y[5] <= 1
+primal_lower_interdiction[6]: u[6] + y[6] <= 1
+primal_lower_interdiction[7]: u[7] + y[7] <= 1
+primal_lower_interdiction[8]: u[8] + y[8] <= 1
+primal_lower_interdiction[9]: u[9] + y[9] <= 1
+primal_lower_budget: u[0] + u[1] + u[2] + u[3] + u[4] + u[5] + u[6]
+   + u[7] + u[8] + u[9] <= 1
+ mccormick1[0]: - x[0] + u[0] <= 0
+ mccormick1[1]: - x[1] + u[1] <= 0
+ mccormick1[2]: - x[2] + u[2] <= 0
+ mccormick1[3]: - x[3] + u[3] <= 0
+ mccormick1[4]: - x[4] + u[4] <= 0
+ mccormick1[5]: - x[5] + u[5] <= 0
+ mccormick1[6]: - x[6] + u[6] <= 0
+ mccormick1[7]: - x[7] + u[7] <= 0
+ mccormick1[8]: - x[8] + u[8] <= 0
+ mccormick1[9]: - x[9] + u[9] <= 0
+BOUNDS
+ 0 <= x[0] <= 1
+ 0 <= y[0] <= 1
+ 0 <= u[0] <= 1
+ 0 <= x[1] <= 1
+ 0 <= y[1] <= 1
+ 0 <= u[1] <= 1
+ 0 <= x[2] <= 1
+ 0 <= y[2] <= 1
+ 0 <= u[2] <= 1
+ 0 <= x[3] <= 1
+ 0 <= y[3] <= 1
+ 0 <= u[3] <= 1
+ 0 <= x[4] <= 1
+ 0 <= y[4] <= 1
+ 0 <= u[4] <= 1
+ 0 <= x[5] <= 1
+ 0 <= y[5] <= 1
+ 0 <= u[5] <= 1
+ 0 <= x[6] <= 1
+ 0 <= y[6] <= 1
+ 0 <= u[6] <= 1
+ 0 <= x[7] <= 1
+ 0 <= y[7] <= 1
+ 0 <= u[7] <= 1
+ 0 <= x[8] <= 1
+ 0 <= y[8] <= 1
+ 0 <= u[8] <= 1
+ 0 <= x[9] <= 1
+ 0 <= y[9] <= 1
+ 0 <= u[9] <= 1
+BINARIES
+x[0] x[1] x[2] x[3] x[4] x[5] x[6] x[7] x[8] x[9] y[0] y[1] y[2] y[3]
+ y[4] y[5] y[6] y[7] y[8] y[9] u[0] u[1] u[2] u[3] u[4] u[5] u[6] u[7]
+ u[8] u[9]
+EXISTS
+x[0] x[1] x[2] x[3] x[4] x[5] x[6] x[7] x[8] x[9] y[0] y[1] y[2] y[3]
+ y[4] y[5] y[6] y[7] y[8] y[9]
+ALL
+u[0] u[1] u[2] u[3] u[4] u[5] u[6] u[7] u[8] u[9]
+ORDER
+x[0] x[1] x[2] x[3] x[4] x[5] x[6] x[7] x[8] x[9] y[0] y[1] y[2] y[3]
+ y[4] y[5] y[6] y[7] y[8] y[9] u[0] u[1] u[2] u[3] u[4] u[5] u[6] u[7]
+ u[8] u[9]
+END
